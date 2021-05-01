@@ -11,13 +11,9 @@ public class AccountTest {
 
     @BeforeEach
     void setUp() {
-        account = new Account(ID);
+        account = new CheckingAccount(ID);
     }
 
-    @Test
-    void account_has_no_type_initially() {
-        assertNull(account.getType());
-    }
 
     @Test
     void account_has_type() {

@@ -23,14 +23,14 @@ public class BankTest {
 
     @Test
     void add_empty_account_to_bank() {
-        bank.addAccount(new Account(ID));
+        bank.addAccount(new CheckingAccount(ID));
         assertEquals(0, bank.getAccount(ID).getBalance());
         assertEquals(null, bank.getAccount(ID).getType());
     }
 
     @Test
     void add_account_with_balance_to_bank() {
-        bank.addAccount(new Account(ID, BALANCE));
+        bank.addAccount(new CheckingAccount(ID, BALANCE));
         assertEquals(ID, bank.getAccounts().get(ID).getID());
     }
 
@@ -54,21 +54,21 @@ public class BankTest {
 
     @Test
     void add_two_accounts_to_bank() {
-        bank.addAccount(new Account(ID, BALANCE));
-        bank.addAccount(new Account(ID + 1, BALANCE));
+        bank.addAccount(new CheckingAccount(ID, BALANCE));
+        bank.addAccount(new CheckingAccount(ID + 1, BALANCE));
         assertEquals(ID + 1, bank.getAccounts().get(ID + 1).getID());
     }
 
     @Test
     void delete_account() {
-        bank.addAccount(new Account(ID));
+        bank.addAccount(new CheckingAccount(ID));
         bank.deleteAccount(ID);
         assertTrue(bank.getAccount(ID) == null);
     }
 
     @Test
     void withdraw_from_account() {
-        bank.addAccount(new Account(ID, 500));
+        bank.addAccount(new CheckingAccount(ID, 500));
         bank.reduceAccountBalance(ID, 250);
         assertEquals(250, bank.getAccount(ID).getBalance());
     }
@@ -96,7 +96,7 @@ public class BankTest {
 
     @Test
     void deposit_to_account() {
-        bank.addAccount(new Account(ID));
+        bank.addAccount(new CheckingAccount(ID));
         bank.increaseAccountBalance(ID, 250);
         assertEquals(250, bank.getAccount(ID).getBalance());
     }
@@ -124,21 +124,21 @@ public class BankTest {
 
     @Test
     void attempt_reduce_below_zero() {
-        bank.addAccount(new Account(ID));
+        bank.addAccount(new CheckingAccount(ID));
         bank.getAccount(ID).reduceBalance(500);
         assertTrue(0 <= bank.getAccount(ID).getBalance());
     }
 
     @Test
     void attempt_increase_negatively_below_zero() {
-        bank.addAccount(new Account(ID));
+        bank.addAccount(new CheckingAccount(ID));
         bank.getAccount(ID).addBalance(-500);
         assertTrue(0 <= bank.getAccount(ID).getBalance());
     }
 
     @Test
     void attempt_initialization_below_zero() {
-        bank.addAccount(new Account(ID, -5000));
+        bank.addAccount(new CheckingAccount(ID, -5000));
         assertTrue(0 <= bank.getAccount(ID).getBalance());
     }
 }

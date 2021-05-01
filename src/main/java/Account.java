@@ -1,4 +1,4 @@
-public class Account {
+public abstract class Account {
 
     private int ID;
     private int balance;
