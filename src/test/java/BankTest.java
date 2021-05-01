@@ -22,13 +22,6 @@ public class BankTest {
     }
 
     @Test
-    void add_empty_account_to_bank() {
-        bank.addAccount(new CheckingAccount(ID));
-        assertEquals(0, bank.getAccount(ID).getBalance());
-        assertEquals(null, bank.getAccount(ID).getType());
-    }
-
-    @Test
     void add_account_with_balance_to_bank() {
         bank.addAccount(new CheckingAccount(ID, BALANCE));
         assertEquals(ID, bank.getAccounts().get(ID).getID());
