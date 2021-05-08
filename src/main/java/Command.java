@@ -1,13 +1,21 @@
 public class Command {
-    public Command() {
+    public Command(String str) {
 
     }
 
-    public boolean is_valid(String cmd) {
+    public void give_command_to_accountant() {
+
+    }
+
+    public boolean is_valid() {
         return true;
     }
 
-    public void instruct_accountant(String valid_cmd) {
+    public String get_instruction() {
+        return null;
+    }
 
+    public String get_payload() {
+        return null;
     }
 }
