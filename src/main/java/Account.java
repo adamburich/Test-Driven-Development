@@ -2,6 +2,7 @@ public abstract class Account {
 
     private int ID;
     private int balance;
+    private double APR;
 
     public Account(int id) {
         ID = id;
@@ -12,6 +13,14 @@ public abstract class Account {
         if (bal >= 0) {
             balance = bal;
         }
+    }
+
+    public Account(int id, int bal, int apr) {
+        ID = id;
+        if (bal >= 0) {
+            balance = bal;
+        }
+        APR = apr;
     }
 
     public int getID() {
@@ -55,4 +64,13 @@ public abstract class Account {
             this.setBalance(this.getBalance() + to);
         }
     }
+
+    public void awardAPR() {
+        double accAPR = APR / 100;
+        accAPR = accAPR / 12;
+        accAPR = accAPR * this.getBalance();
+        this.setBalance((int) accAPR);
+    }
+
+
 }

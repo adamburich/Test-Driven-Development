@@ -35,4 +35,16 @@ public class Bank {
             accounts.get(id).addBalance(change);
         }
     }
+
+    public void transferFunds(Account source, Account destination, double amount) {
+
+    }
+
+    public void passTime(int n) {
+
+    }
+
+    public void displayAccount(Account account) {
+
+    }
 }
