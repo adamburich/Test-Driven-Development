@@ -3,6 +3,7 @@ import java.util.Map;
 
 public class Bank {
     private Map<Integer, Account> accounts;
+    private Accountant ben = new Accountant();
 
     Bank() {
         accounts = new HashMap<>();
