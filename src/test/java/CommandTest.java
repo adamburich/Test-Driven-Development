@@ -43,13 +43,13 @@ public class CommandTest {
     @Test
     void payload_is_present() {
         Command nextcommand = new Command("weposit 12345678 5");
-        assertTrue(nextcommand.getPayload().length == 2);
+        assertTrue(nextcommand.validate_deposit_payload_arg_length());
     }
 
     @Test
     void payload_is_absent() {
         Command command = new Command("create");
-        assertTrue(command.getPayload().length == 0);
+        assertFalse(command.validate_deposit_payload_arg_length());
     }
 
     @Test
@@ -58,12 +58,6 @@ public class CommandTest {
         assertTrue(command.create_payload_is_invalid());
     }
 
-    @Test
-    void cmd_is_invalid() {
-        Command c1 = new Command("create invalid command");
-        Command c2 = new Command("deposit invalid command");
-        assertFalse(c1.validate_command() && c2.validate_command());
-    }
 
     @Test
     void cmd_is_empty() {
@@ -71,11 +65,6 @@ public class CommandTest {
         assertTrue(c1.command_is_empty);
     }
 
-    @Test
-    void cmd_is_jibberish() {
-        Command c1 = new Command("asoidjasoidjasoidj");
-        assertFalse(c1.validate_command());
-    }
 
     @Test
     void create_cd_with_invalid_amount() {
@@ -242,5 +231,18 @@ public class CommandTest {
         bank.addAccount(new CDAccount(55554444));
         Command c1 = new Command("deposit 55554444 1000");
         assertTrue(c1.attempted_deposit_to_cd_account);
+    }
+
+    @Test
+    void cmd_is_invalid() {
+        Command c1 = new Command("create invalid command");
+        Command c2 = new Command("deposit invalid command");
+        assertFalse(c1.validate_command() && c2.validate_command());
+    }
+
+    @Test
+    void cmd_is_jibberish() {
+        Command c1 = new Command("asoidjasoidjasoidj");
+        assertFalse(c1.validate_command());
     }
 }

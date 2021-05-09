@@ -54,8 +54,16 @@ public class Command {
         this.validate_command();
     }
 
-    public void give_valid_command_to_accountant() {
+    public boolean contains_valid_instruction(String str) {
+        if (VALID_INSTRUCTIONS.contains(str)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public String getInstruction() {
+        return instruction;
     }
 
     public boolean validate_command() {
@@ -72,69 +80,6 @@ public class Command {
             return false;
         }
 
-    }
-
-    private boolean validate_deposit() {
-        if (validate_deposit_payload_arg_length() && validate_account_id_usage(payload[0])) {
-            if (deposit_follows_deposit_rules()) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    public boolean deposit_follows_deposit_rules() {
-        Account account = Bank.getAccount(Integer.parseInt(payload[0]));
-        if (account == null) {
-            deposit_attempted_to_nonexistant_account = true;
-            return false;
-        } else {
-            String account_type = account.getType().toLowerCase();
-            if (payload[1].matches(".*[a-z].*")) {
-                malformed_deposit_amount = true;
-                return false;
-            } else {
-                Double deposit_amount = Double.parseDouble(payload[1]);
-                if (account_type.equals("savings")) {
-                    if (deposit_amount <= 2500 && deposit_amount >= 0) {
-                        return true;
-                    } else if (deposit_amount < 0) {
-                        attempted_to_deposit_negative = true;
-                        return false;
-                    } else {
-                        deposit_to_savings_is_illegal_amount = true;
-                        return false;
-                    }
-                } else if (account_type.equals("checking")) {
-                    if (deposit_amount <= 1000 && deposit_amount >= 0) {
-                        return true;
-                    } else if (deposit_amount < 0) {
-                        attempted_to_deposit_negative = true;
-                        return false;
-                    } else {
-                        deposit_to_checking_is_illegal_amount = true;
-                        return false;
-                    }
-                } else if (account_type.equals("cd")) {
-                    attempted_deposit_to_cd_account = true;
-                    return false;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-    }
-
-    public boolean validate_deposit_payload_arg_length() {
-        if (payload.length == 2) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public boolean validate_create() {
@@ -237,20 +182,71 @@ public class Command {
         }
     }
 
-    public boolean deposit_payload_is_invalid() {
-        return invalid_or_missing_account_type || malformed_id || attempt_to_access_nonexistant_account || !this.validate_deposit_payload_arg_length();
+    private boolean validate_deposit() {
+        if (validate_deposit_payload_arg_length() && validate_account_id_usage(payload[0])) {
+            if (deposit_follows_deposit_rules()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
-    public boolean contains_valid_instruction(String str) {
-        if (VALID_INSTRUCTIONS.contains(str)) {
+    public boolean deposit_follows_deposit_rules() {
+        Account account = Bank.getAccount(Integer.parseInt(payload[0]));
+        if (account == null) {
+            deposit_attempted_to_nonexistant_account = true;
+            return false;
+        } else {
+            String account_type = account.getType().toLowerCase();
+            if (payload[1].matches(".*[a-z].*")) {
+                malformed_deposit_amount = true;
+                return false;
+            } else {
+                Double deposit_amount = Double.parseDouble(payload[1]);
+                if (account_type.equals("savings")) {
+                    if (deposit_amount <= 2500 && deposit_amount >= 0) {
+                        return true;
+                    } else if (deposit_amount < 0) {
+                        attempted_to_deposit_negative = true;
+                        return false;
+                    } else {
+                        deposit_to_savings_is_illegal_amount = true;
+                        return false;
+                    }
+                } else if (account_type.equals("checking")) {
+                    if (deposit_amount <= 1000 && deposit_amount >= 0) {
+                        return true;
+                    } else if (deposit_amount < 0) {
+                        attempted_to_deposit_negative = true;
+                        return false;
+                    } else {
+                        deposit_to_checking_is_illegal_amount = true;
+                        return false;
+                    }
+                } else if (account_type.equals("cd")) {
+                    attempted_deposit_to_cd_account = true;
+                    return false;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+    }
+
+    public boolean validate_deposit_payload_arg_length() {
+        if (payload.length == 2) {
             return true;
         } else {
             return false;
         }
     }
 
-    public String getInstruction() {
-        return instruction;
+    public boolean deposit_payload_is_invalid() {
+        return invalid_or_missing_account_type || malformed_id || attempt_to_access_nonexistant_account || !this.validate_deposit_payload_arg_length();
     }
 
     public boolean create_payload_is_invalid() {
@@ -261,6 +257,10 @@ public class Command {
 
     public String[] getPayload() {
         return payload;
+    }
+
+    public void give_valid_command_to_accountant() {
+
     }
 
 }
