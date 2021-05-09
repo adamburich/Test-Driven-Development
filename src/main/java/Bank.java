@@ -2,11 +2,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
-    private Map<Integer, Account> accounts;
+    private static Map<Integer, Account> accounts;
     private Accountant ben = new Accountant();
 
     Bank() {
         accounts = new HashMap<>();
+    }
+
+    public static Account getAccount(int id) {
+        try {
+            return accounts.get(id);
+        } catch (NullPointerException n) {
+            return null;
+        }
     }
 
     public Map<Integer, Account> getAccounts() {
@@ -15,10 +23,6 @@ public class Bank {
 
     public void addAccount(Account acc) {
         accounts.put(acc.getID(), acc);
-    }
-
-    public Account getAccount(int id) {
-        return accounts.get(id);
     }
 
     public void deleteAccount(int id) {
