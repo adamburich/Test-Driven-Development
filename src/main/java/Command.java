@@ -14,19 +14,26 @@ public class Command {
             "cd"
     );
 
-    public boolean invalid_or_missing_account_type = false;
-    public boolean create_attempted_with_duplicate_id = false;
-    public boolean malformed_id = false;
-    public boolean attempt_to_access_nonexistant_account = false;
-    public boolean malformed_initial_balance = false;
-    public boolean cd_with_illegal_init_balance = false;
-    public boolean create_savings_checking_with_invalid_arglength = false;
-    public boolean create_has_malformed_apr = false;
-    public boolean create_cd_with_invalid_arglength = false;
-    public boolean create_with_illegal_apr_val = false;
-    public boolean invalid_instruction = false;
-    public boolean command_is_empty = false;
-
+    public boolean
+            invalid_or_missing_account_type,
+            create_attempted_with_duplicate_id,
+            malformed_id,
+            attempt_to_access_nonexistant_account,
+            malformed_initial_balance,
+            cd_with_illegal_init_balance,
+            create_savings_checking_with_invalid_arglength,
+            create_has_malformed_apr,
+            create_cd_with_invalid_arglength,
+            create_with_illegal_apr_val,
+            invalid_instruction,
+            command_is_empty,
+            attempted_deposit_to_cd_account,
+            deposit_to_savings_is_illegal_amount,
+            deposit_to_checking_is_illegal_amount,
+            deposit_attempted_to_nonexistant_account,
+            malformed_deposit_amount,
+            attempted_to_deposit_negative
+                    = false;
 
     private String instruction;
     private String[] payload;
@@ -54,21 +61,9 @@ public class Command {
     public boolean validate_command() {
         if (payload.length > 0) {
             if (instruction.equals("create")) {
-                if (validate_create_payload_arg_length() && validate_account_type(payload[0]) && validate_account_id_usage(payload[1]) && validate_apr(payload[2])) {
-                    if (payload[0].equals("cd")) {
-                        if (validate_initial_cd_balance(payload[3])) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        return true;
-                    }
-                } else {
-                    return false;
-                }
+                return this.validate_create();
             } else if (instruction.equals("deposit")) {
-                return true;
+                return this.validate_deposit();
             } else {
                 invalid_instruction = true;
                 return false;
@@ -77,6 +72,85 @@ public class Command {
             return false;
         }
 
+    }
+
+    private boolean validate_deposit() {
+        if (validate_deposit_payload_arg_length() && validate_account_id_usage(payload[0])) {
+            if (deposit_follows_deposit_rules()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deposit_follows_deposit_rules() {
+        Account account = Bank.getAccount(Integer.parseInt(payload[0]));
+        if (account == null) {
+            deposit_attempted_to_nonexistant_account = true;
+            return false;
+        } else {
+            String account_type = account.getType().toLowerCase();
+            if (payload[1].matches(".*[a-z].*")) {
+                malformed_deposit_amount = true;
+                return false;
+            } else {
+                Double deposit_amount = Double.parseDouble(payload[1]);
+                if (account_type.equals("savings")) {
+                    if (deposit_amount <= 2500 && deposit_amount >= 0) {
+                        return true;
+                    } else if (deposit_amount < 0) {
+                        attempted_to_deposit_negative = true;
+                        return false;
+                    } else {
+                        deposit_to_savings_is_illegal_amount = true;
+                        return false;
+                    }
+                } else if (account_type.equals("checking")) {
+                    if (deposit_amount <= 1000 && deposit_amount >= 0) {
+                        return true;
+                    } else if (deposit_amount < 0) {
+                        attempted_to_deposit_negative = true;
+                        return false;
+                    } else {
+                        deposit_to_checking_is_illegal_amount = true;
+                        return false;
+                    }
+                } else if (account_type.equals("cd")) {
+                    attempted_deposit_to_cd_account = true;
+                    return false;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+    }
+
+    public boolean validate_deposit_payload_arg_length() {
+        if (payload.length == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean validate_create() {
+        if (validate_create_payload_arg_length() && validate_account_type(payload[0]) && validate_account_id_usage(payload[1]) && validate_apr(payload[2])) {
+            if (payload[0].equals("cd")) {
+                if (validate_initial_cd_balance(payload[3])) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     public boolean validate_create_payload_arg_length() {
@@ -163,8 +237,8 @@ public class Command {
         }
     }
 
-    public boolean deposit_command_has_valid_payload() {
-        return false;
+    public boolean deposit_payload_is_invalid() {
+        return invalid_or_missing_account_type || malformed_id || attempt_to_access_nonexistant_account || !this.validate_deposit_payload_arg_length();
     }
 
     public boolean contains_valid_instruction(String str) {
@@ -179,7 +253,7 @@ public class Command {
         return instruction;
     }
 
-    public boolean payload_is_invalid() {
+    public boolean create_payload_is_invalid() {
         return invalid_or_missing_account_type || malformed_id || create_attempted_with_duplicate_id || attempt_to_access_nonexistant_account
                 || malformed_initial_balance || cd_with_illegal_init_balance || create_savings_checking_with_invalid_arglength || create_has_malformed_apr || create_cd_with_invalid_arglength
                 || create_with_illegal_apr_val;

@@ -55,7 +55,7 @@ public class CommandTest {
     @Test
     void payload_is_invalid() {
         Command command = new Command("create invalid invalid");
-        assertTrue(command.payload_is_invalid());
+        assertTrue(command.create_payload_is_invalid());
     }
 
     @Test
@@ -162,5 +162,85 @@ public class CommandTest {
     void create_with_excessively_long_id() {
         Command c1 = new Command("create savings 12345678991 .45");
         assertTrue(c1.malformed_id);
+    }
+
+    @Test
+    void deposit_with_misspelled_deposit_instruction() {
+        Command c1 = new Command("dewosit 12345678 500");
+        assertTrue(c1.invalid_instruction);
+    }
+
+    @Test
+    void deposit_without_deposit_instruction() {
+        Command c1 = new Command("12345678 500");
+        assertTrue(c1.invalid_instruction);
+    }
+
+    @Test
+    void deposit_without_id_present() {
+        Command c1 = new Command("deposit 500");
+        assertTrue(c1.deposit_payload_is_invalid());
+    }
+
+    @Test
+    void deposit_without_amount_present() {
+        Command c1 = new Command("deposit 12345678");
+        assertTrue(c1.deposit_payload_is_invalid());
+    }
+
+    @Test
+    void deposit_attempted_with_negative_amount() {
+        Bank bank = new Bank();
+        bank.addAccount(new CheckingAccount(12345678));
+        bank.addAccount(new SavingsAccount(89898989));
+        Command c1 = new Command("deposit 12345678 -500");
+        Command c2 = new Command("deposit 89898989 -500");
+        assertTrue(c1.attempted_to_deposit_negative && c2.attempted_to_deposit_negative);
+    }
+
+    @Test
+    void deposit_to_nonexistant_account() {
+        Command c1 = new Command("deposit 41414141 500");
+        assertTrue(c1.attempt_to_access_nonexistant_account);
+    }
+
+    @Test
+    void deposit_with_random_capitalization() {
+        Bank bank = new Bank();
+        bank.addAccount(new CheckingAccount(11112222));
+        Command c1 = new Command("dEpoSit 11112222 500");
+        assertTrue(c1.validate_command());
+    }
+
+    @Test
+    void valid_deposit_to_valid_account() {
+        Bank bank = new Bank();
+        bank.addAccount(new CheckingAccount(11113333));
+        Command c1 = new Command("deposit 11113333 500");
+        assertTrue(c1.validate_command());
+    }
+
+    @Test
+    void deposit_too_much_to_checking() {
+        Bank bank = new Bank();
+        bank.addAccount(new CheckingAccount(11114444));
+        Command c1 = new Command("deposit 11114444 9999");
+        assertTrue(c1.deposit_to_checking_is_illegal_amount);
+    }
+
+    @Test
+    void deposit_too_much_to_savings() {
+        Bank bank = new Bank();
+        bank.addAccount(new SavingsAccount(11115555));
+        Command c1 = new Command("deposit 11115555 50505");
+        assertTrue(c1.deposit_to_savings_is_illegal_amount);
+    }
+
+    @Test
+    void attempt_deposit_to_cd_account() {
+        Bank bank = new Bank();
+        bank.addAccount(new CDAccount(55554444));
+        Command c1 = new Command("deposit 55554444 1000");
+        assertTrue(c1.attempted_deposit_to_cd_account);
     }
 }
