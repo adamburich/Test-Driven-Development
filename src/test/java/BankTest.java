@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTest {
     Bank bank;
@@ -133,5 +132,18 @@ public class BankTest {
     void attempt_initialization_below_zero() {
         bank.addAccount(new CheckingAccount(ID, -5000));
         assertTrue(0 <= bank.getAccount(ID).getBalance());
+    }
+
+    @Test
+    void account_does_not_exist_in_bank() {
+        Account result = bank.getAccount(88888888);
+        assertNull(result);
+    }
+
+    @Test
+    void account_already_exists_in_bank() {
+        bank.addAccount(new CheckingAccount(ID));
+        Account result = bank.getAccount(ID);
+        assertTrue(result != null);
     }
 }
