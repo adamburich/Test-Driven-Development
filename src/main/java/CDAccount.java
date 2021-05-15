@@ -1,18 +1,21 @@
 public class CDAccount extends Account {
     private static String TYPE = "CD";
     private static int ID;
-    private int balance;
+    private double balance = 0;
+    private double APR = 0;
 
     public CDAccount(int id) {
         super(id);
     }
 
-    public CDAccount(int id, int b) {
-        super(id, b);
+    public CDAccount(int id, double apr, double bal) {
+        super(id, apr, bal);
     }
 
     @Override
     public String getType() {
         return TYPE;
     }
+
+
 }

@@ -53,7 +53,7 @@ public class AccountTest {
 
     @Test
     void cd_account_is_cd_type() {
-        account = new CDAccount(ID, 0);
+        account = new CDAccount(ID, 0.0, 0);
         assertEquals(account.getType(), "CD");
     }
 
@@ -66,7 +66,7 @@ public class AccountTest {
     @Test
     void deposit_cash() {
         int deposit = 750;
-        int initial = account.getBalance();
+        double initial = account.getBalance();
         account.addBalance(deposit);
         assertEquals(initial + 750, account.getBalance());
     }

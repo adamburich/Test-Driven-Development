@@ -9,6 +9,7 @@ public class BankTest {
     int ID = 12345678;
     String TYPE;
     int BALANCE = 0;
+    double APR = 1.0;
 
     @BeforeEach
     void setUp() {
@@ -40,7 +41,7 @@ public class BankTest {
 
     @Test
     void add_cd_account_to_bank() {
-        bank.addAccount(new CDAccount(ID, BALANCE));
+        bank.addAccount(new CDAccount(ID, APR, BALANCE));
         assertEquals("CD", bank.getAccount(ID).getType());
     }
 
@@ -59,13 +60,6 @@ public class BankTest {
     }
 
     @Test
-    void withdraw_from_account() {
-        bank.addAccount(new CheckingAccount(ID, 500));
-        bank.reduceAccountBalance(ID, 250);
-        assertEquals(250, bank.getAccount(ID).getBalance());
-    }
-
-    @Test
     void withdraw_from_checking_account() {
         bank.addAccount(new CheckingAccount(ID, BALANCE + 100));
         bank.reduceAccountBalance(ID, 100);
@@ -81,7 +75,7 @@ public class BankTest {
 
     @Test
     void withdraw_from_savings_account() {
-        bank.addAccount(new CDAccount(ID, BALANCE + 100));
+        bank.addAccount(new CDAccount(ID, APR, BALANCE + 100));
         bank.reduceAccountBalance(ID, 100);
         assertEquals(BALANCE, bank.getAccount(ID).getBalance());
     }
@@ -109,7 +103,7 @@ public class BankTest {
 
     @Test
     void deposit_to_cd_account() {
-        bank.addAccount(new CDAccount(ID, BALANCE));
+        bank.addAccount(new CDAccount(ID, APR, BALANCE));
         bank.increaseAccountBalance(ID, 100);
         assertEquals(BALANCE + 100, bank.getAccount(ID).getBalance());
     }
