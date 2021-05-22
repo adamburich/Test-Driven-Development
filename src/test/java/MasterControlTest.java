@@ -23,32 +23,6 @@ public class MasterControlTest {
     }
 
     @Test
-    void typo_in_create_command_is_invalid() {
-        input.add("creat checking 12345678 1.0");
-        List<String> actual = controller.start(input);
-        assertSingleCommand("creat checking 12345678 1.0", actual);
-    }
-
-    @Test
-    void typo_in_deposit_command_is_invalid() {
-        input.add("depositt 12345678 1.0");
-        List<String> actual = controller.start(input);
-        assertSingleCommand("depositt 12345678 1.0", actual);
-    }
-
-    @Test
-    void two_invalid_commands_both_have_typo() {
-        input.add("creat checking 12345678 1.0");
-        input.add("depositt 12345678 1.0");
-
-        List<String> actual = controller.start(input);
-
-        assertEquals(2, actual.size());
-        assertEquals("creat checking 12345678 1.0", actual.get(0));
-        assertEquals("depositt 12345678 1.0", actual.get(1));
-    }
-
-    @Test
     void invalid_creation_of_duplicate_account_id() {
         input.add("create checking 12345678 1.0");
         input.add("create checking 12345678 1.0");
