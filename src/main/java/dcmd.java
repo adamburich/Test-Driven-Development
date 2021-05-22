@@ -1,5 +1,3 @@
-package banking;
-
 import java.util.Arrays;
 
 public class dcmd extends cmd {

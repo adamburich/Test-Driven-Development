@@ -1,5 +1,3 @@
-package banking;
-
 public abstract class Account {
 
     private int ID;
