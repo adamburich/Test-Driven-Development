@@ -90,15 +90,6 @@ public class ValidatorTest {
     }
 
     @Test
-    void create_with_duplicate_id() {
-        Bank bank = new Bank();
-        bank.addAccount(new CheckingAccount(89898989));
-        ccmd c1 = new ccmd("create cd 89898989 .1 999999");
-        val.validate(c1);
-        assertFalse(val.id_is_not_duplicate);
-    }
-
-    @Test
     void create_valid_account_with_random_capitalizations() {
         ccmd c1 = new ccmd("CReate CHEcKInG 12345678 .1");
         assertTrue(val.validate(c1));
@@ -209,37 +200,6 @@ public class ValidatorTest {
         dcmd c1 = new dcmd("deposit 12345678");
         val.validate(c1);
         assertFalse(val.cmd_has_valid_payload_size);
-    }
-
-    @Test
-    void deposit_attempted_with_negative_amount() {
-        Bank bank = new Bank();
-        bank.addAccount(new CheckingAccount(12345678));
-        bank.addAccount(new SavingsAccount(89898989));
-        dcmd c1 = new dcmd("deposit 12345678 -500");
-        dcmd c2 = new dcmd("deposit 89898989 -500");
-        val.validate(c1);
-        Validator v2 = new Validator(bank);
-        v2.validate(c2);
-        assertFalse(val.valid_deposit_amount && v2.valid_deposit_amount);
-    }
-
-    @Test
-    void deposit_too_much_to_checking() {
-        Bank bank = new Bank();
-        bank.addAccount(new CheckingAccount(11114444));
-        dcmd c1 = new dcmd("deposit 11114444 9999");
-        val.validate(c1);
-        assertFalse(val.valid_deposit_amount);
-    }
-
-    @Test
-    void deposit_too_much_to_savings() {
-        Bank bank = new Bank();
-        bank.addAccount(new SavingsAccount(11115555));
-        dcmd c1 = new dcmd("deposit 11115555 50505");
-        val.validate(c1);
-        assertFalse(val.valid_deposit_amount);
     }
 
     @Test
