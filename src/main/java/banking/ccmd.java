@@ -1,3 +1,5 @@
+package banking;
+
 import java.util.Arrays;
 
 public class ccmd extends cmd {

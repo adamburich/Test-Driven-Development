@@ -1,3 +1,5 @@
+package banking;
+
 public class CDAccount extends Account {
     private static String TYPE = "CD";
     private static int ID;
