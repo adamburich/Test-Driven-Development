@@ -1,21 +1,19 @@
 public abstract class Account {
 
     private int ID;
-    private int balance;
-    private double APR;
+    private double balance = 0;
+    private double APR = 0;
 
     public Account(int id) {
         ID = id;
     }
 
-    public Account(int id, int bal) {
+    public Account(int id, double apr) {
         ID = id;
-        if (bal >= 0) {
-            balance = bal;
-        }
+        APR = apr;
     }
 
-    public Account(int id, int bal, int apr) {
+    public Account(int id, double apr, double bal) {
         ID = id;
         if (bal >= 0) {
             balance = bal;
@@ -34,32 +32,36 @@ public abstract class Account {
     public Account assignType(String type) {
         switch (type.toUpperCase()) {
             case "CHECKING":
-                return new CheckingAccount(this.ID, this.balance);
+                return new CheckingAccount(this.ID, this.APR);
             case "SAVINGS":
-                return new SavingsAccount(this.ID, this.balance);
+                return new SavingsAccount(this.ID, this.APR);
             case "CD":
-                return new CDAccount(this.ID, this.balance);
+                return new CDAccount(this.ID, this.APR, this.balance);
         }
         return null;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(int bal) {
+    public void setBalance(double bal) {
         if (bal >= 0) {
             balance = bal;
         }
     }
 
-    public void reduceBalance(int by) {
+    public double getAPR() {
+        return APR;
+    }
+
+    public void reduceBalance(double by) {
         if (this.getBalance() - by >= 0) {
             this.setBalance(this.getBalance() - by);
         }
     }
 
-    public void addBalance(int to) {
+    public void addBalance(double to) {
         if (to >= 0) {
             this.setBalance(this.getBalance() + to);
         }

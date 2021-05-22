@@ -2,14 +2,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
-    private static Map<Integer, Account> accounts;
-    private Accountant ben = new Accountant();
+    public Map<Integer, Account> accounts;
 
     Bank() {
         accounts = new HashMap<>();
     }
 
-    public static Account getAccount(int id) {
+    public Account getAccount(int id) {
         try {
             return accounts.get(id);
         } catch (NullPointerException n) {
@@ -29,13 +28,13 @@ public class Bank {
         accounts.remove(id);
     }
 
-    public void reduceAccountBalance(int id, int change) {
+    public void reduceAccountBalance(int id, double change) {
         if (accounts.get(id).getBalance() - change >= 0) {
             accounts.get(id).reduceBalance(change);
         }
     }
 
-    public void increaseAccountBalance(int id, int change) {
+    public void increaseAccountBalance(int id, double change) {
         if (accounts.get(id).getBalance() + change >= 0) {
             accounts.get(id).addBalance(change);
         }
