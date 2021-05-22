@@ -11,7 +11,7 @@ before_script:
 
 build:
   stage: build
-  script: 
+  script:
     - gradle --build-cache assemble
     - echo $CI_BUILD_PATH
     - echo $CI_PROJECT_DIR
@@ -29,7 +29,15 @@ code_quality:
     CODE_QUALITY_IMAGE: "registry.gitlab.com/gitlab-org/ci-cd/codequality:latest"
   artifacts:
     expose_as: 'Code Quality Report'
-    paths: [gl-code-quality-report.json]
+    paths: [ gl-code-quality-report.json ]
+
+code_quality_html:
+  extends: code_quality
+  variables:
+    REPORT_FORMAT: html
+  artifacts:
+    expose_as: 'Code Quality Report HTML'
+    paths: [ gl-code-quality-report.html ]
 
 test:
   stage: test
@@ -43,13 +51,16 @@ test:
     reports:
       junit: build/test-results/test/**/TEST-*.xml
 
-code_quality_html:
-  extends: code_quality
-  variables:
-    REPORT_FORMAT: html
+mutation-coverage:
+  stage: test
+  script:
+    - 'gradle test pitest'
+    - 'tar -czvf build/reports/pitest.tar.gz build/reports/pitest/'
   artifacts:
-    expose_as: 'Code Quality Report HTML'
-    paths: [gl-code-quality-report.html]
+    when: always
+    expose_as: 'Pitest Report'
+    paths:
+      - build/reports/pitest.tar.gz
 
 coverage-jdk11:
   stage: deploy
@@ -57,11 +68,11 @@ coverage-jdk11:
   script:
     - 'python /opt/cover2cover.py builds/jacoco/jacoco.xml src/main/java > builds/cobertura.xml'
     - 'python /opt/source2filename.py builds/cobertura.xml'
-  needs: ["test"]
+  needs: [ "test" ]
   dependencies:
     - test
   artifacts:
     expose_as: 'Coverage Report'
-    paths: [builds/cobertura.xml]
+    paths: [ builds/cobertura.xml ]
     reports:
       cobertura: builds/cobertura.xml

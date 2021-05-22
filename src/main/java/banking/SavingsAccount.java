@@ -1,3 +1,5 @@
+package banking;
+
 public class SavingsAccount extends Account {
     private static String TYPE = "SAVINGS";
     private static int ID;

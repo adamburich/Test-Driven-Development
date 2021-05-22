@@ -1,3 +1,5 @@
+package banking;
+
 public class CheckingAccount extends Account {
     private static String TYPE = "CHECKING";
     private static int ID;
