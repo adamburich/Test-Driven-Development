@@ -28,9 +28,11 @@ public class cmd {
 
     public cmd identify_type() {
         if (instruction.equalsIgnoreCase("deposit")) {
-            return new dcmd(init_string);
+            return new deposit_cmd(init_string);
         } else if (instruction.equalsIgnoreCase("create")) {
-            return new ccmd(init_string);
+            return new create_cmd(init_string);
+        } else if (instruction.equalsIgnoreCase("pass")){
+            return new passtime_cmd(init_string);
         } else {
             return null;
         }

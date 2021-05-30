@@ -2,8 +2,8 @@ package banking;
 
 import java.util.Arrays;
 
-public class dcmd extends cmd {
-    public dcmd(String c) {
+public class deposit_cmd extends cmd {
+    public deposit_cmd(String c) {
         super(c);
         this.valid_instruction = "deposit";
         Integer deposit_payload_len[] = {2};

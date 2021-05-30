@@ -69,11 +69,13 @@ public abstract class Account {
         }
     }
 
-    public void awardAPR() {
+    public void awardAPR(int months) {
         double accAPR = APR / 100;
         accAPR = accAPR / 12;
-        accAPR = accAPR * this.getBalance();
-        this.setBalance((int) accAPR);
+        for(int i = 0; i < months; i++){
+            double new_balance = this.getBalance() + (accAPR * this.getBalance());
+            this.setBalance(new_balance);
+        }
     }
 
 

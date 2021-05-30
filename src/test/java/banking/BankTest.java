@@ -142,4 +142,25 @@ public class BankTest {
         Account result = bank.getAccount(ID);
         assertTrue(result != null);
     }
+
+    @Test
+    void time_passing_increases_balance(){
+        Account addme = new CheckingAccount(ID, 5);
+        addme.setBalance(3000);
+        bank.addAccount(addme);
+        bank.passTime(5);
+        assertTrue(addme.getBalance() > 3000);
+    }
+
+    @Test
+    void higher_apr_returns_higher_balance_after_same_time_with_same_init_balance(){
+        Account a1 = new CheckingAccount(ID, 1);
+        Account a2 = new CheckingAccount(ID + 1, 7);
+        a1.setBalance(3000);
+        a2.setBalance(3000);
+        bank.addAccount(a1);
+        bank.addAccount(a2);
+        bank.passTime(12);
+        assertTrue(a2.getBalance() > a1.getBalance());
+    }
 }

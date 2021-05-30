@@ -8,6 +8,7 @@ public class Bank {
 
     Bank() {
         accounts = new HashMap<>();
+
     }
 
     public Account getAccount(int id) {
@@ -46,8 +47,10 @@ public class Bank {
 
     }
 
-    public void passTime(int n) {
-
+    public void passTime(int months) {
+        for(Map.Entry<Integer, Account> acc : accounts.entrySet()){
+            acc.getValue().awardAPR(months);
+        }
     }
 
     public void displayAccount(Account account) {

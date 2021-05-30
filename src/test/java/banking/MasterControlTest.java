@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class MasterControlTest {
     MasterControl controller;
@@ -33,5 +34,6 @@ public class MasterControlTest {
 
         assertSingleCommand("create checking 12345678 1.0", actual);
     }
+
 
 }

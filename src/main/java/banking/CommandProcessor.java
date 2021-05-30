@@ -7,7 +7,7 @@ public class CommandProcessor {
         bank = b;
     }
 
-    public void issue_command(ccmd cmd) {
+    public void issue_command(create_cmd cmd) {
         Account account = null;
         String[] payload = cmd.getPayload();
         String type = payload[0];
@@ -29,7 +29,7 @@ public class CommandProcessor {
         }
     }
 
-    public void issue_command(dcmd cmd) {
+    public void issue_command(deposit_cmd cmd) {
         String[] payload = cmd.getPayload();
         int id = Integer.parseInt(payload[0]);
         double deposit = Double.parseDouble(payload[1]);
@@ -37,11 +37,20 @@ public class CommandProcessor {
         bank.increaseAccountBalance(id, deposit);
     }
 
+    public void issue_command(passtime_cmd cmd){
+        String[] payload = cmd.getPayload();
+        int num = Integer.parseInt(payload[0]);
+
+        bank.passTime(num);
+    }
+
     public void issue_command(cmd c) {
-        if (c instanceof ccmd) {
-            issue_command((ccmd) c);
-        } else if (c instanceof dcmd) {
-            issue_command((dcmd) c);
+        if (c instanceof create_cmd) {
+            issue_command((create_cmd) c);
+        } else if (c instanceof deposit_cmd) {
+            issue_command((deposit_cmd) c);
+        } else if (c instanceof passtime_cmd) {
+            issue_command((passtime_cmd) c);
         }
     }
 }

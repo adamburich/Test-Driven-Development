@@ -19,5 +19,15 @@ public class CDAccount extends Account {
         return TYPE;
     }
 
+    public void awardAPR(int months){
+        double accAPR = APR / 100;
+        accAPR = accAPR / 12;
+        for(int j = 0; j < months; j++){
+            for(int i = 0; i < 4; i++){
+                double new_balance = this.getBalance() + (accAPR * this.getBalance());
+                this.setBalance(new_balance);
+            }
+        }
+    }
 
 }
