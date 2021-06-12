@@ -32,19 +32,19 @@ public class BankTest {
     @Test
     void add_checking_account_to_bank() {
         bank.addAccount(new CheckingAccount(ID, BALANCE));
-        assertEquals("CHECKING", bank.getAccount(ID).getType());
+        assertEquals("Checking", bank.getAccount(ID).getType());
     }
 
     @Test
     void add_savings_account_to_bank() {
         bank.addAccount(new SavingsAccount(ID, BALANCE));
-        assertEquals("SAVINGS", bank.getAccount(ID).getType());
+        assertEquals("Savings", bank.getAccount(ID).getType());
     }
 
     @Test
     void add_cd_account_to_bank() {
         bank.addAccount(new CDAccount(ID, APR, BALANCE));
-        assertEquals("CD", bank.getAccount(ID).getType());
+        assertEquals("Cd", bank.getAccount(ID).getType());
     }
 
     @Test

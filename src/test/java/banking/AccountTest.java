@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AccountTest {
 
     public static final int ID = 12345678;
-    public static final String TYPE = "CHECKING";
+    public static final String TYPE = "Checking";
     Account account;
 
     @BeforeEach
@@ -25,38 +25,38 @@ public class AccountTest {
 
     @Test
     void account_assigned_savings_is_savings_type() {
-        account = account.assignType("SAVINGS");
-        assertEquals(account.getType(), "SAVINGS");
+        account = account.assignType("Savings");
+        assertEquals(account.getType(), "Savings");
     }
 
     @Test
     void account_assigned_checking_is_checking_type() {
-        account = account.assignType("CHECKING");
-        assertEquals(account.getType(), "CHECKING");
+        account = account.assignType("Checking");
+        assertEquals(account.getType(), "Checking");
     }
 
     @Test
     void account_assigned_cd_is_cd_type() {
-        account = account.assignType("CD");
-        assertEquals(account.getType(), "CD");
+        account = account.assignType("Cd");
+        assertEquals(account.getType(), "Cd");
     }
 
     @Test
     void savings_account_is_savings_type() {
         account = new SavingsAccount(ID, 0);
-        assertEquals(account.getType(), "SAVINGS");
+        assertEquals(account.getType(), "Savings");
     }
 
     @Test
     void checking_account_is_checking_type() {
         account = new CheckingAccount(ID, 0);
-        assertEquals(account.getType(), "CHECKING");
+        assertEquals(account.getType(), "Checking");
     }
 
     @Test
     void cd_account_is_cd_type() {
         account = new CDAccount(ID, 0.0, 0);
-        assertEquals(account.getType(), "CD");
+        assertEquals(account.getType(), "Cd");
     }
 
     @Test
@@ -76,7 +76,7 @@ public class AccountTest {
     @Test
     void deposit_to_checking() {
         int deposit = 750;
-        account.assignType("CHECKING");
+        account.assignType("Checking");
         account.setBalance(0);
         account.deposit(deposit);
         assertEquals(deposit, account.getBalance());
@@ -85,7 +85,7 @@ public class AccountTest {
     @Test
     void deposit_to_savings() {
         int deposit = 750;
-        account.assignType("SAVINGS");
+        account.assignType("Savings");
         account.setBalance(0);
         account.deposit(deposit);
         assertEquals(deposit, account.getBalance());
@@ -94,7 +94,7 @@ public class AccountTest {
     @Test
     void deposit_to_cd() {
         int deposit = 750;
-        account.assignType("CD");
+        account.assignType("Cd");
         account.setBalance(0);
         account.deposit(deposit);
         assertEquals(deposit, account.getBalance());
@@ -112,7 +112,7 @@ public class AccountTest {
     @Test
     void withdraw_from_savings() {
         int withdrawal = 500;
-        account.assignType("SAVINGS");
+        account.assignType("Savings");
         account.setBalance(1000);
         account.withdraw(withdrawal);
         assertEquals(500, account.getBalance());
@@ -121,7 +121,7 @@ public class AccountTest {
     @Test
     void withdraw_from_checking() {
         int withdrawal = 500;
-        account.assignType("CHECKING");
+        account.assignType("Checking");
         account.setBalance(1000);
         account.withdraw(withdrawal);
         assertEquals(500, account.getBalance());
@@ -130,7 +130,7 @@ public class AccountTest {
     @Test
     void withdraw_from_cd() {
         int withdrawal = 500;
-        account.assignType("CD");
+        account.assignType("Cd");
         account.setBalance(1000);
         account.withdraw(withdrawal);
         assertEquals(500, account.getBalance());
