@@ -163,4 +163,15 @@ public class BankTest {
         bank.passTime(12);
         assertTrue(a2.getBalance() > a1.getBalance());
     }
+
+    @Test
+    void cd_gets_less_money_over_year_with_same_APR() {
+        Account a1 = new CheckingAccount(ID, 1);
+        Account a2 = new CDAccount(ID + 1, 1, 3000);
+        a1.setBalance(3000);
+        bank.addAccount(a1);
+        bank.addAccount(a2);
+        bank.passTime(12);
+        assertTrue(a1.getBalance() > a2.getBalance());
+    }
 }
