@@ -4,7 +4,6 @@ public class CDAccount extends Account {
     private static String TYPE = "Cd";
     private static int ID;
     private double balance = 0;
-    private double APR = 0;
 
     public CDAccount(int id) {
         super(id);
@@ -21,7 +20,7 @@ public class CDAccount extends Account {
 
     @Override
     public void awardAPR(int months) {
-        double accAPR = APR / 100;
+        double accAPR = this.getAPR() / 100;
         accAPR = accAPR / 12;
         for (int j = 0; j < months; j++) {
             for (int i = 0; i < 4; i++) {
