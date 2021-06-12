@@ -25,13 +25,13 @@ public class Validator {
         this.bank = bank;
     }
 
-    public boolean validate(cmd c) {
+    public boolean validate(Command c) {
         if (c.getInstruction().equalsIgnoreCase(c.getValidInstruction())) {
             cmd_has_valid_instruction = true;
             if (c.getValidPayloadLength().contains(c.getPayload().length)) {
                 cmd_has_valid_payload_size = true;
                 String[] payload = c.getPayload();
-                if (c instanceof create_cmd) {
+                if (c instanceof CreateCommand) {
                     String shouldbe_type = payload[0];
                     String shouldbe_id = payload[1];
                     String shouldbe_apr = payload[2];
@@ -64,7 +64,7 @@ public class Validator {
                         }
                     }
                     return id_is_not_duplicate && cmd_has_valid_instruction && cmd_has_valid_payload_size && valid_type_given && valid_id_format && valid_apr_given && valid_init_balance;
-                } else if (c instanceof deposit_cmd) {
+                } else if (c instanceof DepositCommand) {
                     String shouldbe_id = payload[0];
                     String shouldbe_amount = payload[1];
                     if (!shouldbe_id.matches(".*[a-z].*") && shouldbe_id.length() == 8) {
@@ -88,7 +88,7 @@ public class Validator {
                         }
                     }
                     return cmd_has_valid_instruction && cmd_has_valid_payload_size && valid_id_format && accessing_existing_id && valid_deposit_amount && account_supports_deposits;
-                } else if (c instanceof passtime_cmd) {
+                } else if (c instanceof PassCommand) {
                     String shouldbe_months = payload[0];
                     int shouldbe_months_int = Integer.parseInt(shouldbe_months);
                     if (!shouldbe_months.matches(".*[a-z].*")) {
@@ -98,7 +98,7 @@ public class Validator {
                         }
                     }
                     return cmd_has_valid_instruction && cmd_has_valid_payload_size && passtime_payload_is_int && passtime_months_within_boundaries;
-                } else if (c instanceof withdrawal_cmd) {
+                } else if (c instanceof WithdrawalCommand) {
                     String account_id = payload[0];
                     String amount_str = payload[1];
                     Double amount = Double.parseDouble(amount_str);
@@ -140,7 +140,7 @@ public class Validator {
 
                         }
                     }
-                } else if (c instanceof transfer_cmd) {
+                } else if (c instanceof TransferCommand) {
                     String transfer_source = payload[0];
                     String transfer_target = payload[1];
                     String amount_string = payload[2];
@@ -165,8 +165,8 @@ public class Validator {
                         if (transfer_source_account_exists && transfer_target_account_exists) {
                             if (!(bank.getAccount(Integer.parseInt(transfer_target)) instanceof CDAccount) && !(bank.getAccount(Integer.parseInt(transfer_source)) instanceof CDAccount)) {
                                 transfer_among_legal_types = true;
-                                withdrawal_cmd withdrawal = new withdrawal_cmd(withdraw_cmd_string);
-                                deposit_cmd deposit = new deposit_cmd(deposit_cmd_string);
+                                WithdrawalCommand withdrawal = new WithdrawalCommand(withdraw_cmd_string);
+                                DepositCommand deposit = new DepositCommand(deposit_cmd_string);
                                 if (validate(withdrawal) && validate(deposit)) {
                                     return true;
                                 }

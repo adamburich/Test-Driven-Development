@@ -7,7 +7,7 @@ public class CommandProcessor {
         bank = b;
     }
 
-    public void issue_command(create_cmd cmd) {
+    public void issue_command(CreateCommand cmd) {
         Account account = null;
         String[] payload = cmd.getPayload();
         String type = payload[0];
@@ -29,7 +29,7 @@ public class CommandProcessor {
         }
     }
 
-    public void issue_command(deposit_cmd cmd) {
+    public void issue_command(DepositCommand cmd) {
         String[] payload = cmd.getPayload();
         int id = Integer.parseInt(payload[0]);
         double deposit = Double.parseDouble(payload[1]);
@@ -38,36 +38,36 @@ public class CommandProcessor {
         bank.getAccount(id).saveTransaction(cmd.init_string);
     }
 
-    public void issue_command(passtime_cmd cmd) {
+    public void issue_command(PassCommand cmd) {
         String[] payload = cmd.getPayload();
         int num = Integer.parseInt(payload[0]);
 
         bank.passTime(num);
     }
 
-    public void issue_command(transfer_cmd cmd) {
+    public void issue_command(TransferCommand cmd) {
         String[] payload = cmd.getPayload();
         bank.getAccount(Integer.parseInt(payload[0])).withdraw(Double.parseDouble(payload[2]));
         bank.getAccount(Integer.parseInt(payload[1])).deposit(Double.parseDouble(payload[2]));
         bank.getAccount(Integer.parseInt(payload[1])).saveTransaction(cmd.init_string);
     }
 
-    public void issue_command(withdrawal_cmd cmd) {
+    public void issue_command(WithdrawalCommand cmd) {
         String[] payload = cmd.getPayload();
         bank.getAccount(Integer.parseInt(payload[0])).withdraw(Double.parseDouble(payload[1]));
     }
 
-    public void issue_command(cmd c) {
-        if (c instanceof create_cmd) {
-            issue_command((create_cmd) c);
-        } else if (c instanceof deposit_cmd) {
-            issue_command((deposit_cmd) c);
-        } else if (c instanceof passtime_cmd) {
-            issue_command((passtime_cmd) c);
-        } else if (c instanceof transfer_cmd) {
-            issue_command((transfer_cmd) c);
-        } else if (c instanceof withdrawal_cmd) {
-            issue_command((withdrawal_cmd) c);
+    public void issue_command(Command c) {
+        if (c instanceof CreateCommand) {
+            issue_command((CreateCommand) c);
+        } else if (c instanceof DepositCommand) {
+            issue_command((DepositCommand) c);
+        } else if (c instanceof PassCommand) {
+            issue_command((PassCommand) c);
+        } else if (c instanceof TransferCommand) {
+            issue_command((TransferCommand) c);
+        } else if (c instanceof WithdrawalCommand) {
+            issue_command((WithdrawalCommand) c);
         }
     }
 }

@@ -2,8 +2,8 @@ package banking;
 
 import java.util.Arrays;
 
-public class withdrawal_cmd extends cmd {
-    public withdrawal_cmd(String c) {
+public class WithdrawalCommand extends Command {
+    public WithdrawalCommand(String c) {
         super(c);
         this.valid_instruction = "withdraw";
         Integer withdraw_payload_len[] = {2};

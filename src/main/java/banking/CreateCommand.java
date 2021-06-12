@@ -2,9 +2,9 @@ package banking;
 
 import java.util.Arrays;
 
-public class create_cmd extends cmd {
+public class CreateCommand extends Command {
 
-    public create_cmd(String c) {
+    public CreateCommand(String c) {
         super(c);
         this.valid_instruction = "create";
         Integer create_payload_len[] = {3, 4};

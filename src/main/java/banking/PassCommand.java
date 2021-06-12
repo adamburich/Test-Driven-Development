@@ -2,8 +2,8 @@ package banking;
 
 import java.util.Arrays;
 
-public class passtime_cmd extends cmd {
-    public passtime_cmd(String c) {
+public class PassCommand extends Command {
+    public PassCommand(String c) {
         super(c);
         this.valid_instruction = "pass";
         Integer passtime_payload_len[] = {1};

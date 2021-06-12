@@ -58,18 +58,18 @@ public class Bank {
         }
     }
 
-    public void displayAccount(Account account) {
-
+    public String displayAccount(Account account) {
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        formatter.setRoundingMode(RoundingMode.FLOOR);
+        return account.getType() + " " + account.getID() + " " + formatter.format(account.getBalance()) + " " + formatter.format(account.getAPR());
     }
 
     public ArrayList<String> output() {
         ArrayList<String> out = new ArrayList<String>();
-        DecimalFormat formatter = new DecimalFormat("0.00");
-        formatter.setRoundingMode(RoundingMode.FLOOR);
         ArrayList<Integer> keys = new ArrayList<Integer>(accounts.keySet());
         for (int i = keys.size() - 1; i >= 0; i--) {
             if (accounts.get(keys.get(i)).getBalance() > 0) {
-                out.add(accounts.get(keys.get(i)).getType() + " " + accounts.get(keys.get(i)).getID() + " " + formatter.format(accounts.get(keys.get(i)).getBalance()) + " " + formatter.format(accounts.get(keys.get(i)).getAPR()));
+                out.add(displayAccount(accounts.get(keys.get(i))));
                 if (accounts.get(keys.get(i)).transactionHistory().size() > 0) {
                     for (String str : accounts.get(keys.get(i)).transactionHistory()) {
                         out.add(str);

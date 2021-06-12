@@ -19,7 +19,7 @@ public class MasterControl {
     public List<String> start(List<String> input) {
         for (String str : input) {
             validator = new Validator(bank);
-            cmd comm = new cmd(str);
+            Command comm = new Command(str);
             comm = comm.identify_type();
             if (validator.validate(comm)) {
                 processor.issue_command(comm);
