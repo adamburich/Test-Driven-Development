@@ -1,7 +1,7 @@
 package banking;
 
 public class CDAccount extends Account {
-    private static String TYPE = "CD";
+    private static String TYPE = "Cd";
     private static int ID;
     private double balance = 0;
     private double APR = 0;
@@ -19,11 +19,12 @@ public class CDAccount extends Account {
         return TYPE;
     }
 
-    public void awardAPR(int months){
+    @Override
+    public void awardAPR(int months) {
         double accAPR = APR / 100;
         accAPR = accAPR / 12;
-        for(int j = 0; j < months; j++){
-            for(int i = 0; i < 4; i++){
+        for (int j = 0; j < months; j++) {
+            for (int i = 0; i < 4; i++) {
                 double new_balance = this.getBalance() + (accAPR * this.getBalance());
                 this.setBalance(new_balance);
             }

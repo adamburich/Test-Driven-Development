@@ -1,5 +1,6 @@
 package banking;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MasterControl {
@@ -26,7 +27,10 @@ public class MasterControl {
                 storage.addInvalidCommand(str);
             }
         }
-        return storage.getInvalidCommands();
+        List<String> out = new ArrayList<String>();
+        out.addAll(bank.output());
+        out.addAll(storage.getInvalidCommands());
+        return out;
     }
 
 

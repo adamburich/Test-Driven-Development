@@ -1,5 +1,8 @@
 package banking;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,28 +35,48 @@ public class Bank {
     }
 
     public void reduceAccountBalance(int id, double change) {
-        if (accounts.get(id).getBalance() - change >= 0) {
-            accounts.get(id).reduceBalance(change);
+        if (accounts.get(id).getBalance() - change >= 0 && accounts.get(id).getBalance() > 0) {
+            accounts.get(id).withdraw(change);
         }
     }
 
     public void increaseAccountBalance(int id, double change) {
         if (accounts.get(id).getBalance() + change >= 0) {
-            accounts.get(id).addBalance(change);
+            accounts.get(id).deposit(change);
         }
     }
 
     public void transferFunds(Account source, Account destination, double amount) {
-
+        accounts.get(source.getID()).withdraw(amount);
+        accounts.get(destination.getID()).deposit(amount);
     }
 
     public void passTime(int months) {
-        for(Map.Entry<Integer, Account> acc : accounts.entrySet()){
+        for (Map.Entry<Integer, Account> acc : accounts.entrySet()) {
             acc.getValue().awardAPR(months);
+            acc.getValue().ageSingleMonth();
         }
     }
 
     public void displayAccount(Account account) {
 
+    }
+
+    public ArrayList<String> output() {
+        ArrayList<String> out = new ArrayList<String>();
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        formatter.setRoundingMode(RoundingMode.FLOOR);
+        ArrayList<Integer> keys = new ArrayList<Integer>(accounts.keySet());
+        for (int i = keys.size() - 1; i >= 0; i--) {
+            if (accounts.get(keys.get(i)).getBalance() > 0) {
+                out.add(accounts.get(keys.get(i)).getType() + " " + accounts.get(keys.get(i)).getID() + " " + formatter.format(accounts.get(keys.get(i)).getBalance()) + " " + formatter.format(accounts.get(keys.get(i)).getAPR()));
+                if (accounts.get(keys.get(i)).transactionHistory().size() > 0) {
+                    for (String str : accounts.get(keys.get(i)).transactionHistory()) {
+                        out.add(str);
+                    }
+                }
+            }
+        }
+        return out;
     }
 }

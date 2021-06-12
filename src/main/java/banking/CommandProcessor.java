@@ -34,14 +34,27 @@ public class CommandProcessor {
         int id = Integer.parseInt(payload[0]);
         double deposit = Double.parseDouble(payload[1]);
 
-        bank.increaseAccountBalance(id, deposit);
+        bank.getAccount(id).deposit(deposit);
+        bank.getAccount(id).saveTransaction(cmd.init_string);
     }
 
-    public void issue_command(passtime_cmd cmd){
+    public void issue_command(passtime_cmd cmd) {
         String[] payload = cmd.getPayload();
         int num = Integer.parseInt(payload[0]);
 
         bank.passTime(num);
+    }
+
+    public void issue_command(transfer_cmd cmd) {
+        String[] payload = cmd.getPayload();
+        bank.getAccount(Integer.parseInt(payload[0])).withdraw(Double.parseDouble(payload[2]));
+        bank.getAccount(Integer.parseInt(payload[1])).deposit(Double.parseDouble(payload[2]));
+        bank.getAccount(Integer.parseInt(payload[1])).saveTransaction(cmd.init_string);
+    }
+
+    public void issue_command(withdrawal_cmd cmd) {
+        String[] payload = cmd.getPayload();
+        bank.getAccount(Integer.parseInt(payload[0])).withdraw(Double.parseDouble(payload[1]));
     }
 
     public void issue_command(cmd c) {
@@ -51,6 +64,10 @@ public class CommandProcessor {
             issue_command((deposit_cmd) c);
         } else if (c instanceof passtime_cmd) {
             issue_command((passtime_cmd) c);
+        } else if (c instanceof transfer_cmd) {
+            issue_command((transfer_cmd) c);
+        } else if (c instanceof withdrawal_cmd) {
+            issue_command((withdrawal_cmd) c);
         }
     }
 }

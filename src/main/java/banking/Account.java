@@ -1,10 +1,14 @@
 package banking;
 
+import java.util.ArrayList;
+
 public abstract class Account {
 
     private int ID;
     private double balance = 0;
     private double APR = 0;
+    private int monthsOld = 0;
+    private CommandSaver transaction_tracker = new CommandSaver();
 
     public Account(int id) {
         ID = id;
@@ -57,25 +61,44 @@ public abstract class Account {
         return APR;
     }
 
-    public void reduceBalance(double by) {
-        if (this.getBalance() - by >= 0) {
-            this.setBalance(this.getBalance() - by);
+    public void withdraw(double amount) {
+        if (this.getBalance() > 0 && this.getBalance() - amount >= 0) {
+            this.setBalance(this.getBalance() - amount);
+        }
+        if (this.getBalance() < 0) {
+            this.setBalance(0);
         }
     }
 
-    public void addBalance(double to) {
-        if (to >= 0) {
-            this.setBalance(this.getBalance() + to);
+    public void deposit(double amount) {
+        if (amount >= 0) {
+            this.setBalance(this.getBalance() + amount);
         }
     }
 
     public void awardAPR(int months) {
         double accAPR = APR / 100;
         accAPR = accAPR / 12;
-        for(int i = 0; i < months; i++){
+        for (int i = 0; i < months; i++) {
             double new_balance = this.getBalance() + (accAPR * this.getBalance());
             this.setBalance(new_balance);
         }
+    }
+
+    public void saveTransaction(String cmd) {
+        transaction_tracker.addValidCommand(cmd);
+    }
+
+    public ArrayList<String> transactionHistory() {
+        return transaction_tracker.getValidCommands();
+    }
+
+    public void ageSingleMonth() {
+        monthsOld += 1;
+    }
+
+    public int age() {
+        return monthsOld;
     }
 
 

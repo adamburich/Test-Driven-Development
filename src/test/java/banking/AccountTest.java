@@ -69,7 +69,7 @@ public class AccountTest {
     void deposit_cash() {
         int deposit = 750;
         double initial = account.getBalance();
-        account.addBalance(deposit);
+        account.deposit(deposit);
         assertEquals(initial + 750, account.getBalance());
     }
 
@@ -78,7 +78,7 @@ public class AccountTest {
         int deposit = 750;
         account.assignType("CHECKING");
         account.setBalance(0);
-        account.addBalance(deposit);
+        account.deposit(deposit);
         assertEquals(deposit, account.getBalance());
     }
 
@@ -87,7 +87,7 @@ public class AccountTest {
         int deposit = 750;
         account.assignType("SAVINGS");
         account.setBalance(0);
-        account.addBalance(deposit);
+        account.deposit(deposit);
         assertEquals(deposit, account.getBalance());
     }
 
@@ -96,7 +96,7 @@ public class AccountTest {
         int deposit = 750;
         account.assignType("CD");
         account.setBalance(0);
-        account.addBalance(deposit);
+        account.deposit(deposit);
         assertEquals(deposit, account.getBalance());
     }
 
@@ -105,7 +105,7 @@ public class AccountTest {
         int withdrawal = 500;
         account.setBalance(750);
         int initial = 750;
-        account.reduceBalance(withdrawal);
+        account.withdraw(withdrawal);
         assertEquals(initial - withdrawal, account.getBalance());
     }
 
@@ -114,7 +114,7 @@ public class AccountTest {
         int withdrawal = 500;
         account.assignType("SAVINGS");
         account.setBalance(1000);
-        account.reduceBalance(withdrawal);
+        account.withdraw(withdrawal);
         assertEquals(500, account.getBalance());
     }
 
@@ -123,7 +123,7 @@ public class AccountTest {
         int withdrawal = 500;
         account.assignType("CHECKING");
         account.setBalance(1000);
-        account.reduceBalance(withdrawal);
+        account.withdraw(withdrawal);
         assertEquals(500, account.getBalance());
     }
 
@@ -132,7 +132,7 @@ public class AccountTest {
         int withdrawal = 500;
         account.assignType("CD");
         account.setBalance(1000);
-        account.reduceBalance(withdrawal);
+        account.withdraw(withdrawal);
         assertEquals(500, account.getBalance());
     }
 
@@ -141,7 +141,7 @@ public class AccountTest {
         int withdrawal = 500;
         account.setBalance(250);
         int initial = 250;
-        account.reduceBalance(withdrawal);
+        account.withdraw(withdrawal);
         assertEquals(initial, account.getBalance());
     }
 

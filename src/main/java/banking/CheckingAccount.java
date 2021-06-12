@@ -1,7 +1,7 @@
 package banking;
 
 public class CheckingAccount extends Account {
-    private static String TYPE = "CHECKING";
+    private static String TYPE = "Checking";
     private static int ID;
     private double balance = 0;
     private double APR = 0;
