@@ -172,7 +172,7 @@ public class BankTest {
         bank.addAccount(a1);
         bank.addAccount(a2);
         bank.passTime(12);
-        assertTrue(a1.getBalance() > a2.getBalance());
+        assertTrue(a1.getBalance() < a2.getBalance());
     }
 
     @Test
