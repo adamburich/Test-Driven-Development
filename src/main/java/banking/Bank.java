@@ -53,7 +53,11 @@ public class Bank {
 
     public void passTime(int months) {
         for (Map.Entry<Integer, Account> acc : accounts.entrySet()) {
-            acc.getValue().awardAPR(months);
+            if (acc instanceof CDAccount) {
+                ((CDAccount) (acc.getValue())).awardAPR(months);
+            } else {
+                acc.getValue().awardAPR(months);
+            }
             acc.getValue().ageSingleMonth();
         }
     }

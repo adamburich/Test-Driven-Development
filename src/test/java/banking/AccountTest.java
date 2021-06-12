@@ -140,9 +140,8 @@ public class AccountTest {
     void attempt_overdraft() {
         int withdrawal = 500;
         account.setBalance(250);
-        int initial = 250;
         account.withdraw(withdrawal);
-        assertEquals(initial, account.getBalance());
+        assertEquals(0, account.getBalance());
     }
 
 
