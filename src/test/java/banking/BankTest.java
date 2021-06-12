@@ -77,8 +77,9 @@ public class BankTest {
 
     @Test
     void withdraw_from_savings_account() {
-        bank.addAccount(new CDAccount(ID, APR, BALANCE + 100));
-        bank.reduceAccountBalance(ID, 100);
+        bank.addAccount(new SavingsAccount(ID, APR));
+        bank.getAccount(ID).setBalance(BALANCE + 100);
+        bank.getAccount(ID).withdraw(100);
         assertEquals(BALANCE, bank.getAccount(ID).getBalance());
     }
 
