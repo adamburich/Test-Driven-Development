@@ -174,4 +174,13 @@ public class BankTest {
         bank.passTime(12);
         assertTrue(a1.getBalance() > a2.getBalance());
     }
+
+    @Test
+    void attempt_two_withdraws_in_one_month_savings() {
+        Account a1 = new SavingsAccount(ID, 1);
+        a1.setBalance(5000);
+        a1.withdraw(500);
+        a1.withdraw(300);
+        assertTrue(a1.getBalance() == 4500);
+    }
 }
