@@ -3,9 +3,9 @@ package banking;
 public class SavingsAccount extends Account {
     private static String TYPE = "Savings";
     private static int ID;
+    public boolean monthly_withdrawal_used = false;
     private double balance = 0;
     private double APR = 0;
-    private boolean monthly_withdrawal_used = false;
 
     public SavingsAccount(int id) {
         super(id);

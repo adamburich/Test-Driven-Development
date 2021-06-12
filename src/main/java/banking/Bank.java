@@ -55,6 +55,9 @@ public class Bank {
         for (Map.Entry<Integer, Account> acc : accounts.entrySet()) {
             acc.getValue().awardAPR(months);
             acc.getValue().ageSingleMonth();
+            if (acc.getValue() instanceof SavingsAccount) {
+                ((SavingsAccount) acc.getValue()).monthly_withdrawal_used = false;
+            }
         }
     }
 

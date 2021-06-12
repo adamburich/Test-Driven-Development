@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MasterControlTest {
-    MasterControl controller;
+    MasterControl masterControl;
     List<String> input = new ArrayList<>();
 
     private void assertSingleCommand(String cmd, List<String> actual) {
@@ -21,7 +21,7 @@ public class MasterControlTest {
     void setup() {
         input = new ArrayList<>();
         Bank bank = new Bank();
-        controller = new MasterControl(bank, new Validator(bank), new CommandProcessor(bank), new CommandSaver());
+        masterControl = new MasterControl(bank, new Validator(bank), new CommandProcessor(bank), new CommandSaver());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class MasterControlTest {
         input.add("create checking 12345678 1.0");
         input.add("create checking 12345678 1.0");
 
-        List<String> actual = controller.start(input);
+        List<String> actual = masterControl.start(input);
 
         assertSingleCommand("create checking 12345678 1.0", actual);
     }
@@ -44,7 +44,7 @@ public class MasterControlTest {
         input.add("Transfer 98765432 12345678 300");
         input.add("Pass 1");
         input.add("Create cd 23456789 1.2 2000");
-        List<String> actual = controller.start(input);
+        List<String> actual = masterControl.start(input);
 
         assertEquals(5, actual.size());
         assertEquals("Savings 12345678 1000.50 0.60", actual.get(0));

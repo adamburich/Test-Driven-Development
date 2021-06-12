@@ -178,9 +178,31 @@ public class BankTest {
     @Test
     void attempt_two_withdraws_in_one_month_savings() {
         Account a1 = new SavingsAccount(ID, 1);
+        bank.addAccount(a1);
         a1.setBalance(5000);
         a1.withdraw(500);
         a1.withdraw(300);
         assertTrue(a1.getBalance() == 4500);
+    }
+
+    @Test
+    void attempt_two_withdraws_in_two_month_savings() {
+        Account a1 = new SavingsAccount(ID, 1);
+        bank.addAccount(a1);
+        a1.setBalance(5000);
+        a1.withdraw(500);
+        bank.passTime(1);
+        a1.withdraw(300);
+        assertTrue(a1.getBalance() < 4500);
+    }
+
+    @Test
+    void withdraw_all_from_cd_of_age() {
+        Account a1 = new SavingsAccount(ID, 1);
+        bank.addAccount(a1);
+        a1.setBalance(5000);
+        bank.passTime(15);
+        a1.withdraw(99999);
+        assertTrue(a1.getBalance() == 0);
     }
 }

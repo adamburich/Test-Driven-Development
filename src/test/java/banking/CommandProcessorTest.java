@@ -59,4 +59,22 @@ public class CommandProcessorTest {
         processor.issue_command(pass);
         assertTrue(bank.getAccount(12345678).getBalance() > 3000);
     }
+
+    @Test
+    void transfer_removes_from_source_adds_to_target() {
+        bank.addAccount(new CheckingAccount(12345678, 1));
+        bank.getAccount(12345678).setBalance(1000);
+        bank.addAccount(new SavingsAccount(23456789, 1));
+        bank.transferFunds(bank.getAccount(12345678), bank.getAccount(23456789), 500);
+        assertTrue(bank.getAccount(12345678).getBalance() == 500);
+        assertTrue(bank.getAccount(23456789).getBalance() == 500);
+    }
+
+    @Test
+    void early_withdrawal_from_cd_fails() {
+        Account a = new CDAccount(12345678, 1, 5000);
+        bank.addAccount(a);
+        a.withdraw(10000);
+        assertTrue(a.getBalance() == 5000);
+    }
 }
