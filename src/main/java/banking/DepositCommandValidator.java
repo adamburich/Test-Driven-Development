@@ -21,7 +21,9 @@ public class DepositCommandValidator {
             }
             if (!(target instanceof CDAccount)) {
                 account_supports_deposits = true;
-                if ((target instanceof CheckingAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 1000)) || (target instanceof SavingsAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 2500))) {
+                boolean checking = target instanceof CheckingAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 1000);
+                boolean savings = target instanceof SavingsAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 2500);
+                if (checking || savings) {
                     valid_deposit_amount = true;
                 }
             }

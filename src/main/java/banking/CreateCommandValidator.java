@@ -33,7 +33,8 @@ public class CreateCommandValidator {
             id_is_not_duplicate = (bank.getAccount(id_int) == null);
         }
         valid_apr_given = !shouldbe_apr.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_apr) >= 0 && Double.parseDouble(shouldbe_apr) <= 10);
-        if ((shouldbe_type.equals("cd") && (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_balance) >= 0 && Double.parseDouble(shouldbe_balance) <= 10000))) || (!shouldbe_type.equals("cd") && shouldbe_balance == null)) {
+        boolean cd = shouldbe_type.equals("cd") && (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_balance) >= 0 && Double.parseDouble(shouldbe_balance) <= 10000));
+        if (cd || (!shouldbe_type.equals("cd") && shouldbe_balance == null)) {
             valid_init_balance = true;
         }
         return id_is_not_duplicate && valid_type_given && valid_id_format && valid_apr_given && valid_init_balance;
