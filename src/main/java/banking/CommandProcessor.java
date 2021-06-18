@@ -17,13 +17,17 @@ public class CommandProcessor {
     public void issue_command(Command c) {
         if (c instanceof CreateCommand) {
             createCommandProcessor.issue_command(c);
-        } else if (c instanceof DepositCommand) {
+        }
+        if (c instanceof DepositCommand) {
             depositCommandProcessor.issue_command(c);
-        } else if (c instanceof PassCommand) {
+        }
+        if (c instanceof PassCommand) {
             passTimeCommandProcessor.issue_command(c);
-        } else if (c instanceof TransferCommand) {
+        }
+        if (c instanceof TransferCommand) {
             transferCommandProcessor.issue_command(c);
-        } else if (c instanceof WithdrawalCommand) {
+        }
+        if (c instanceof WithdrawalCommand) {
             withdrawalCommandProcessor.issue_command(c);
         }
     }

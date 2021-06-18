@@ -26,7 +26,6 @@ public class CreateCommandValidator {
         Double apr_double = Double.parseDouble(shouldbe_apr);
         Double balance_double = Double.parseDouble(shouldbe_balance);
         int id_int = Integer.parseInt(shouldbe_id);
-
         if (payload.length == 4) {
             shouldbe_balance = payload[3];
         }
