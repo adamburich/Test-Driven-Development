@@ -6,7 +6,7 @@ public class Validator {
 
     public boolean cmd_has_valid_instruction, cmd_has_valid_payload_size, valid_id_format,
             valid_apr_given, valid_init_balance, valid_type_given = false;
-    private Bank bank;
+
     private PassTimeCommandValidator passTimeCommandValidator;
     private DepositCommandValidator depositCommandValidator;
     private WithdrawalCommandValidator withdrawalCommandValidator;
@@ -14,7 +14,6 @@ public class Validator {
     private CreateCommandValidator createCommandValidator;
 
     public Validator(Bank bank) {
-        this.bank = bank;
         this.passTimeCommandValidator = new PassTimeCommandValidator();
         this.depositCommandValidator = new DepositCommandValidator(bank);
         this.withdrawalCommandValidator = new WithdrawalCommandValidator(bank);
