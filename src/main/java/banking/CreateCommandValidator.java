@@ -29,25 +29,19 @@ public class CreateCommandValidator {
         if (payload.length == 4) {
             shouldbe_balance = payload[3];
         }
-        if (VALID_ACCOUNT_TYPES.contains(shouldbe_type)) {
-            valid_type_given = true;
-            if (!shouldbe_id.matches(Validator.DIGITS) && shouldbe_id.length() == 8) {
-                valid_id_format = true;
-                if (bank.getAccount(id_int) == null) {
-                    id_is_not_duplicate = true;
-                }
-            }
-            if (!shouldbe_apr.matches(Validator.DIGITS) && (apr_double >= 0 && apr_double <= 10)) {
-                valid_apr_given = true;
-            }
-            if (shouldbe_type.equals("cd") && (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (balance_double >= 0 && balance_double <= 10000))) {
-                valid_init_balance = true;
+        valid_type_given = VALID_ACCOUNT_TYPES.contains(shouldbe_type);
+        if (!shouldbe_id.matches(Validator.DIGITS) && shouldbe_id.length() == 8) {
+            valid_id_format = true;
+            id_is_not_duplicate = (bank.getAccount(id_int) == null);
+        }
+        valid_apr_given = !shouldbe_apr.matches(Validator.DIGITS) && (apr_double >= 0 && apr_double <= 10);
+        if (shouldbe_type.equals("cd") && (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (balance_double >= 0 && balance_double <= 10000))) {
+            valid_init_balance = true;
+        } else {
+            if (shouldbe_balance != null) {
+                cmd_has_valid_payload_size = false;
             } else {
-                if (shouldbe_balance != null) {
-                    cmd_has_valid_payload_size = false;
-                } else {
-                    valid_init_balance = true;
-                }
+                valid_init_balance = true;
             }
         }
         return id_is_not_duplicate && cmd_has_valid_instruction && cmd_has_valid_payload_size && valid_type_given && valid_id_format && valid_apr_given && valid_init_balance;
