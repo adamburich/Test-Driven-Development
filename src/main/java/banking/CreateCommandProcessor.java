@@ -8,7 +8,7 @@ public class CreateCommandProcessor {
         this.bank = b;
     }
 
-    public void issue_command(Command cmd) {
+    public void issue_command(CreateCommand cmd) {
         Account account;
         String[] payload = cmd.getPayload();
         String type = payload[0];
@@ -20,13 +20,13 @@ public class CreateCommandProcessor {
         }
         if (type.equalsIgnoreCase("checking")) {
             account = new CheckingAccount(id, apr);
+            bank.addAccount(account);
         } else if (type.equalsIgnoreCase("savings")) {
             account = new SavingsAccount(id, apr);
+            bank.addAccount(account);
         } else if (type.equalsIgnoreCase("cd")) {
             account = new CDAccount(id, apr, balance);
-        } else {
-            return;
+            bank.addAccount(account);
         }
-        bank.addAccount(account);
     }
 }
