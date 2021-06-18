@@ -73,8 +73,7 @@ public class ValidatorTest {
     @Test
     void create_cd_with_valid_amount() {
         CreateCommand c1 = new CreateCommand("create cd 11111111 .1 5000");
-        val.validate(c1);
-        assertTrue(val.valid_init_balance);
+        assertTrue(val.validate(c1));
     }
 
     @Test
@@ -87,8 +86,7 @@ public class ValidatorTest {
     @Test
     void create_cd_with_valid_apr() {
         CreateCommand c1 = new CreateCommand("create cd 11111111 .1 5000");
-        val.validate(c1);
-        assertTrue(val.valid_apr_given);
+        assertTrue(val.validate(c1));
     }
 
     @Test

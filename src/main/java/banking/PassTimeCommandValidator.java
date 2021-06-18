@@ -18,6 +18,6 @@ public class PassTimeCommandValidator {
                 passtime_months_within_boundaries = true;
             }
         }
-        return cmd_has_valid_instruction && cmd_has_valid_payload_size && passtime_payload_is_int && passtime_months_within_boundaries;
+        return passtime_payload_is_int && passtime_months_within_boundaries;
     }
 }

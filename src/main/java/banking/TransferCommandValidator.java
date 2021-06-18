@@ -6,11 +6,13 @@ public class TransferCommandValidator {
             transfer_target_account_exists, transfer_among_legal_types, transfer_amount_is_double = false;
     private Bank bank;
 
-    private WithdrawalCommandValidator withdrawalCommandValidator = new WithdrawalCommandValidator(bank);
-    private DepositCommandValidator depositCommandValidator = new DepositCommandValidator(bank);
+    private WithdrawalCommandValidator withdrawalCommandValidator;
+    private DepositCommandValidator depositCommandValidator;
 
     public TransferCommandValidator(Bank b) {
         this.bank = b;
+        this.withdrawalCommandValidator = new WithdrawalCommandValidator(bank);
+        this.depositCommandValidator = new DepositCommandValidator(bank);
     }
 
     public boolean validate(Command c) {

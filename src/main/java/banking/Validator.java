@@ -7,14 +7,19 @@ public class Validator {
     public boolean cmd_has_valid_instruction, cmd_has_valid_payload_size, valid_id_format,
             valid_apr_given, valid_init_balance, valid_type_given = false;
     private Bank bank;
-    private PassTimeCommandValidator passTimeCommandValidator = new PassTimeCommandValidator();
-    private DepositCommandValidator depositCommandValidator = new DepositCommandValidator(bank);
-    private WithdrawalCommandValidator withdrawalCommandValidator = new WithdrawalCommandValidator(bank);
-    private TransferCommandValidator transferCommandValidator = new TransferCommandValidator(bank);
-    private CreateCommandValidator createCommandValidator = new CreateCommandValidator(bank);
+    private PassTimeCommandValidator passTimeCommandValidator;
+    private DepositCommandValidator depositCommandValidator;
+    private WithdrawalCommandValidator withdrawalCommandValidator;
+    private TransferCommandValidator transferCommandValidator;
+    private CreateCommandValidator createCommandValidator;
 
     public Validator(Bank bank) {
         this.bank = bank;
+        this.passTimeCommandValidator = new PassTimeCommandValidator();
+        this.depositCommandValidator = new DepositCommandValidator(bank);
+        this.withdrawalCommandValidator = new WithdrawalCommandValidator(bank);
+        this.transferCommandValidator = new TransferCommandValidator(bank);
+        this.createCommandValidator = new CreateCommandValidator(bank);
     }
 
     public boolean validate(Command c) {

@@ -10,12 +10,12 @@ public class CommandProcessor {
     private PassTimeCommandProcessor passTimeCommandProcessor;
 
     public CommandProcessor(Bank b) {
-        bank = b;
-        createCommandProcessor = new CreateCommandProcessor(bank);
-        depositCommandProcessor = new DepositCommandProcessor(bank);
-        withdrawalCommandProcessor = new WithdrawalCommandProcessor(bank);
-        transferCommandProcessor = new TransferCommandProcessor(bank);
-        passTimeCommandProcessor = new PassTimeCommandProcessor(bank);
+        this.bank = b;
+        this.createCommandProcessor = new CreateCommandProcessor(bank);
+        this.depositCommandProcessor = new DepositCommandProcessor(bank);
+        this.withdrawalCommandProcessor = new WithdrawalCommandProcessor(bank);
+        this.transferCommandProcessor = new TransferCommandProcessor(bank);
+        this.passTimeCommandProcessor = new PassTimeCommandProcessor(bank);
     }
 
     public void issue_command(Command c) {

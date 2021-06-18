@@ -9,7 +9,7 @@ public class CreateCommandValidator {
             "savings",
             "cd"
     );
-    public boolean cmd_has_valid_instruction, cmd_has_valid_payload_size, valid_id_format,
+    public boolean valid_id_format,
             valid_apr_given, valid_init_balance, valid_type_given, id_is_not_duplicate = false;
     private Bank bank;
 
@@ -20,7 +20,7 @@ public class CreateCommandValidator {
     public boolean validate(Command c) {
         String[] payload = c.getPayload();
         String shouldbe_type = payload[0].toLowerCase();
-        String shouldbe_id = payload[2];
+        String shouldbe_id = payload[1];
         String shouldbe_apr = payload[2];
         String shouldbe_balance = null;
         if (payload.length == 4) {
@@ -35,15 +35,9 @@ public class CreateCommandValidator {
         valid_apr_given = !shouldbe_apr.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_apr) >= 0 && Double.parseDouble(shouldbe_apr) <= 10);
         if (shouldbe_type.equals("cd") && (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_balance) >= 0 && Double.parseDouble(shouldbe_balance) <= 10000))) {
             valid_init_balance = true;
-        } else {
-            cmd_has_valid_payload_size = shouldbe_balance == null;
-            /**if (shouldbe_balance != null) {
-             cmd_has_valid_payload_size = false;
-             } else {
-             valid_init_balance = true;
-             }*/
-            valid_init_balance = cmd_has_valid_payload_size;
+        } else if (!shouldbe_type.equals("cd") && shouldbe_balance == null) {
+            valid_init_balance = true;
         }
-        return id_is_not_duplicate && cmd_has_valid_instruction && cmd_has_valid_payload_size && valid_type_given && valid_id_format && valid_apr_given && valid_init_balance;
+        return id_is_not_duplicate && valid_type_given && valid_id_format && valid_apr_given && valid_init_balance;
     }
 }

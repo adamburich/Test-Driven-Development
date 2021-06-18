@@ -21,14 +21,12 @@ public class DepositCommandValidator {
             }
             if (!(target instanceof CDAccount)) {
                 account_supports_deposits = true;
+                if ((target instanceof CheckingAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 1000)) || (target instanceof SavingsAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 2500))) {
+                    valid_deposit_amount = true;
+                }
             }
-            if (target instanceof CheckingAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 1000)) {
-                valid_deposit_amount = true;
-            }
-            if (target instanceof SavingsAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 2500)) {
-                valid_deposit_amount = true;
-            }
+
         }
-        return cmd_has_valid_instruction && cmd_has_valid_payload_size && valid_id_format && accessing_existing_id && valid_deposit_amount && account_supports_deposits;
+        return valid_id_format && accessing_existing_id && valid_deposit_amount && account_supports_deposits;
     }
 }
