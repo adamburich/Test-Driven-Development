@@ -2,9 +2,12 @@ package banking;
 
 public class TransferCommandValidator {
 
-    public boolean transfer_source_is_int, transfer_target_is_int, transfer_source_account_exists,
+    public boolean transfer_source_is_int, transfer_target_is_int, transfer_source_account_exists, withdrawal_and_deposit_validate,
             transfer_target_account_exists, transfer_among_legal_types, transfer_amount_is_double = false;
     private Bank bank;
+
+    private WithdrawalCommandValidator withdrawalCommandValidator = new WithdrawalCommandValidator(bank);
+    private DepositCommandValidator depositCommandValidator = new DepositCommandValidator(bank);
 
     public TransferCommandValidator(Bank b) {
         this.bank = b;
@@ -38,12 +41,12 @@ public class TransferCommandValidator {
                     transfer_among_legal_types = true;
                     WithdrawalCommand withdrawal = new WithdrawalCommand(withdraw_cmd_string);
                     DepositCommand deposit = new DepositCommand(deposit_cmd_string);
-                    if (validate(withdrawal) && validate(deposit)) {
-                        return true;
+                    if (withdrawalCommandValidator.validate(withdrawal) && depositCommandValidator.validate(deposit)) {
+                        withdrawal_and_deposit_validate = true;
                     }
                 }
             }
         }
-        return transfer_among_legal_types && transfer_amount_is_double && transfer_target_is_int && transfer_source_is_int && transfer_source_account_exists && transfer_target_account_exists;
+        return withdrawal_and_deposit_validate && transfer_among_legal_types && transfer_amount_is_double && transfer_target_is_int && transfer_source_is_int && transfer_source_account_exists && transfer_target_account_exists;
     }
 }
