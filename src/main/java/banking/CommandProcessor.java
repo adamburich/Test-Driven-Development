@@ -39,25 +39,5 @@ public class CommandProcessor {
             default:
                 break;
         }
-        /**
-         if (c instanceof CreateCommand) {
-         createCommandProcessor.issue_command(c);
-         }
-         if (c instanceof DepositCommand) {
-         depositCommandProcessor.issue_command(c);
-         }
-         if (c instanceof PassCommand) {
-         passTimeCommandProcessor.issue_command(c);
-         }
-         if (c instanceof TransferCommand) {
-         transferCommandProcessor.issue_command(c);
-         }
-         if (c instanceof WithdrawalCommand) {
-         withdrawalCommandProcessor.issue_command(c);
-         }*/
-    }
-
-    enum types {
-        CreateCommand, DepositCommand, WithdrawalCommand, PassCommand, TransferCommand
     }
 }

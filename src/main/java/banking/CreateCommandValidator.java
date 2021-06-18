@@ -38,11 +38,13 @@ public class CreateCommandValidator {
         if (shouldbe_type.equals("cd") && (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (balance_double >= 0 && balance_double <= 10000))) {
             valid_init_balance = true;
         } else {
-            if (shouldbe_balance != null) {
-                cmd_has_valid_payload_size = false;
-            } else {
-                valid_init_balance = true;
-            }
+            cmd_has_valid_payload_size = shouldbe_balance == null;
+            /**if (shouldbe_balance != null) {
+             cmd_has_valid_payload_size = false;
+             } else {
+             valid_init_balance = true;
+             }*/
+            valid_init_balance = cmd_has_valid_payload_size;
         }
         return id_is_not_duplicate && cmd_has_valid_instruction && cmd_has_valid_payload_size && valid_type_given && valid_id_format && valid_apr_given && valid_init_balance;
     }
