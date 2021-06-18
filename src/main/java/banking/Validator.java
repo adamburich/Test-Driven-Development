@@ -18,24 +18,25 @@ public class Validator {
     }
 
     public boolean validate(Command c) {
+        boolean out = false;
         if (c.getInstruction().equalsIgnoreCase(c.getValidInstruction())) {
             cmd_has_valid_instruction = true;
             if (c.getValidPayloadLength().contains(c.getPayload().length)) {
                 cmd_has_valid_payload_size = true;
                 if (c instanceof CreateCommand) {
-                    return createCommandValidator.validate(c);
+                    out = createCommandValidator.validate(c);
                 } else if (c instanceof DepositCommand) {
-                    return depositCommandValidator.validate(c);
+                    out = depositCommandValidator.validate(c);
                 } else if (c instanceof PassCommand) {
-                    return passTimeCommandValidator.validate(c);
+                    out = passTimeCommandValidator.validate(c);
                 } else if (c instanceof WithdrawalCommand) {
-                    return withdrawalCommandValidator.validate(c);
+                    out = withdrawalCommandValidator.validate(c);
                 } else if (c instanceof TransferCommand) {
-                    return transferCommandValidator.validate(c);
+                    out = transferCommandValidator.validate(c);
                 }
             }
         }
-        return false;
+        return out;
     }
 
 }

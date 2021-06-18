@@ -20,7 +20,7 @@ public class CreateCommandValidator {
     public boolean validate(Command c) {
         String[] payload = c.getPayload();
         String shouldbe_type = payload[0].toLowerCase();
-        String shouldbe_id = payload[1];
+        String shouldbe_id = payload[2];
         String shouldbe_apr = payload[2];
         String shouldbe_balance = null;
         Double apr_double = Double.parseDouble(shouldbe_apr);

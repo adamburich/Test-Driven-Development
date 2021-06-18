@@ -9,7 +9,7 @@ public class CreateCommandProcessor {
     }
 
     public void issue_command(CreateCommand cmd) {
-        Account account = null;
+        Account account;
         String[] payload = cmd.getPayload();
         String type = payload[0];
         int id = Integer.parseInt(payload[1]);
@@ -24,9 +24,9 @@ public class CreateCommandProcessor {
             account = new SavingsAccount(id, apr);
         } else if (type.equalsIgnoreCase("cd")) {
             account = new CDAccount(id, apr, balance);
+        } else {
+            return;
         }
-        if (account != null && bank.getAccount(id) == null) {
-            bank.addAccount(account);
-        }
+        bank.addAccount(account);
     }
 }
