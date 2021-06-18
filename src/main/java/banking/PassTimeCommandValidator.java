@@ -1,12 +1,12 @@
 package banking;
 
 public class PassTimeCommandValidator {
+
     public boolean cmd_has_valid_instruction, cmd_has_valid_payload_size,
             passtime_payload_is_int, passtime_months_within_boundaries = false;
-    private Bank bank;
 
-    public PassTimeCommandValidator(Bank b) {
-        this.bank = b;
+    public PassTimeCommandValidator() {
+        //Doesn't need fill
     }
 
     public boolean validate(Command c) {

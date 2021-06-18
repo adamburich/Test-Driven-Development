@@ -41,7 +41,7 @@ public class CreateCommandValidator {
             if (!shouldbe_apr.matches(Validator.DIGITS) && (apr_double >= 0 && apr_double <= 10)) {
                 valid_apr_given = true;
             }
-            if (shouldbe_type.equals("cd") && ((shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (balance_double >= 0 && balance_double <= 10000)))) {
+            if (shouldbe_type.equals("cd") && (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (balance_double >= 0 && balance_double <= 10000))) {
                 valid_init_balance = true;
             } else {
                 if (shouldbe_balance != null) {

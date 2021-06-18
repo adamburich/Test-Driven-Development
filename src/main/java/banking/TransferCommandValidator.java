@@ -36,15 +36,14 @@ public class TransferCommandValidator {
             if (bank.getAccount(Integer.parseInt(transfer_target)) != null) {
                 transfer_target_account_exists = true;
             }
-            if (transfer_source_account_exists && transfer_target_account_exists) {
-                if (!(bank.getAccount(Integer.parseInt(transfer_target)) instanceof CDAccount) && !(bank.getAccount(Integer.parseInt(transfer_source)) instanceof CDAccount)) {
-                    transfer_among_legal_types = true;
-                    WithdrawalCommand withdrawal = new WithdrawalCommand(withdraw_cmd_string);
-                    DepositCommand deposit = new DepositCommand(deposit_cmd_string);
-                    if (withdrawalCommandValidator.validate(withdrawal) && depositCommandValidator.validate(deposit)) {
-                        withdrawal_and_deposit_validate = true;
-                    }
+            if (transfer_source_account_exists && transfer_target_account_exists && (!(bank.getAccount(Integer.parseInt(transfer_target)) instanceof CDAccount) && !(bank.getAccount(Integer.parseInt(transfer_source)) instanceof CDAccount))) {
+                transfer_among_legal_types = true;
+                WithdrawalCommand withdrawal = new WithdrawalCommand(withdraw_cmd_string);
+                DepositCommand deposit = new DepositCommand(deposit_cmd_string);
+                if (withdrawalCommandValidator.validate(withdrawal) && depositCommandValidator.validate(deposit)) {
+                    withdrawal_and_deposit_validate = true;
                 }
+
             }
         }
         return withdrawal_and_deposit_validate && transfer_among_legal_types && transfer_amount_is_double && transfer_target_is_int && transfer_source_is_int && transfer_source_account_exists && transfer_target_account_exists;

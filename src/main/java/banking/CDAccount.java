@@ -27,12 +27,7 @@ public class CDAccount extends Account {
     @Override
     public void withdraw(double amount) {
         if (this.age() >= 12) {
-            if (this.getBalance() > 0) {
-                this.setBalance(this.getBalance() - amount);
-            }
-            if (this.getBalance() < 0) {
-                this.setBalance(0);
-            }
+            super.withdraw(amount);
         }
     }
 

@@ -43,6 +43,8 @@ public abstract class Account {
                 return new SavingsAccount(this.ID, this.APR);
             case "CD":
                 return new CDAccount(this.ID, this.APR, this.balance);
+            default:
+                break;
         }
         return null;
     }

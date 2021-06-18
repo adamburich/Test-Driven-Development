@@ -7,6 +7,7 @@ public class CommandSaver {
     private ArrayList<String> valid_commands = new ArrayList<String>();
 
     public CommandSaver() {
+        //Does not need to be filled
     }
 
     public ArrayList<String> getInvalidCommands() {

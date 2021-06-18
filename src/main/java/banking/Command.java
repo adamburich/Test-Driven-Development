@@ -23,6 +23,7 @@ public class Command {
             instruction = parts[0];
             payload = Arrays.copyOfRange(parts, 1, parts.length);
         } catch (ArrayIndexOutOfBoundsException e) {
+            return;
         }
     }
 
