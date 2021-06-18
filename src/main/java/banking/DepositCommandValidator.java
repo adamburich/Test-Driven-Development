@@ -13,21 +13,19 @@ public class DepositCommandValidator {
         String[] payload = c.getPayload();
         String shouldbe_id = payload[0];
         String shouldbe_amount = payload[1];
-        int id_int = Integer.parseInt(shouldbe_id);
-        double amount_double = Double.parseDouble(shouldbe_amount);
         if (!shouldbe_id.matches(Validator.DIGITS) && shouldbe_id.length() == 8) {
             valid_id_format = true;
-            Account target = bank.getAccount(id_int);
+            Account target = bank.getAccount(Integer.parseInt(shouldbe_id));
             if (target != null) {
                 accessing_existing_id = true;
             }
             if (!(target instanceof CDAccount)) {
                 account_supports_deposits = true;
             }
-            if (target instanceof CheckingAccount && (amount_double >= 0 && amount_double <= 1000)) {
+            if (target instanceof CheckingAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 1000)) {
                 valid_deposit_amount = true;
             }
-            if (target instanceof SavingsAccount && (amount_double >= 0 && amount_double <= 2500)) {
+            if (target instanceof SavingsAccount && (Double.parseDouble(shouldbe_amount) >= 0 && Double.parseDouble(shouldbe_amount) <= 2500)) {
                 valid_deposit_amount = true;
             }
         }
