@@ -27,19 +27,19 @@ public class Command {
     }
 
     public Command identify_type() {
+        Command returnCommand = null;
         if (instruction.equalsIgnoreCase("deposit")) {
-            return new DepositCommand(init_string);
+            returnCommand = new DepositCommand(init_string);
         } else if (instruction.equalsIgnoreCase("create")) {
-            return new CreateCommand(init_string);
+            returnCommand = new CreateCommand(init_string);
         } else if (instruction.equalsIgnoreCase("pass")) {
-            return new PassCommand(init_string);
+            returnCommand = new PassCommand(init_string);
         } else if (instruction.equalsIgnoreCase("transfer")) {
-            return new TransferCommand(init_string);
+            returnCommand = new TransferCommand(init_string);
         } else if (instruction.equalsIgnoreCase("withdraw")) {
-            return new WithdrawalCommand(init_string);
-        } else {
-            return null;
+            returnCommand = new WithdrawalCommand(init_string);
         }
+        return returnCommand;
     }
 
     public String getInstruction() {

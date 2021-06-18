@@ -19,29 +19,30 @@ public class CreateCommandValidator {
 
     public boolean validate(Command c) {
         String[] payload = c.getPayload();
-        String shouldbe_type = payload[0];
+        String shouldbe_type = payload[0].toLowerCase();
         String shouldbe_id = payload[1];
         String shouldbe_apr = payload[2];
         String shouldbe_balance = null;
+        Double apr_double = Double.parseDouble(shouldbe_apr);
+        Double balance_double = Double.parseDouble(shouldbe_balance);
+        int id_int = Integer.parseInt(shouldbe_id);
 
         if (payload.length == 4) {
             shouldbe_balance = payload[3];
         }
-        if (VALID_ACCOUNT_TYPES.contains(shouldbe_type.toLowerCase())) {
+        if (VALID_ACCOUNT_TYPES.contains(shouldbe_type)) {
             valid_type_given = true;
             if (!shouldbe_id.matches(Validator.DIGITS) && shouldbe_id.length() == 8) {
                 valid_id_format = true;
-                if (bank.getAccount(Integer.parseInt(shouldbe_id)) == null) {
+                if (bank.getAccount(id_int) == null) {
                     id_is_not_duplicate = true;
                 }
             }
-            if (!shouldbe_apr.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_apr) >= 0 && Double.parseDouble(shouldbe_apr) <= 10)) {
+            if (!shouldbe_apr.matches(Validator.DIGITS) && (apr_double >= 0 && apr_double <= 10)) {
                 valid_apr_given = true;
             }
-            if (shouldbe_type.equals("cd")) {
-                if (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_balance) >= 0 && Double.parseDouble(shouldbe_balance) <= 10000)) {
-                    valid_init_balance = true;
-                }
+            if (shouldbe_type.equals("cd") && ((shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (balance_double >= 0 && balance_double <= 10000)))) {
+                valid_init_balance = true;
             } else {
                 if (shouldbe_balance != null) {
                     cmd_has_valid_payload_size = false;
