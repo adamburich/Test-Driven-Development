@@ -8,7 +8,7 @@ public class CreateCommandProcessor {
         this.bank = b;
     }
 
-    public void issue_command(CreateCommand cmd) {
+    public void issue_command(Command cmd) {
         Account account;
         String[] payload = cmd.getPayload();
         String type = payload[0];

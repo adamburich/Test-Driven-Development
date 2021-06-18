@@ -16,15 +16,15 @@ public class CommandProcessor {
 
     public void issue_command(Command c) {
         if (c instanceof CreateCommand) {
-            createCommandProcessor.issue_command((CreateCommand) c);
+            createCommandProcessor.issue_command(c);
         } else if (c instanceof DepositCommand) {
-            depositCommandProcessor.issue_command((DepositCommand) c);
+            depositCommandProcessor.issue_command(c);
         } else if (c instanceof PassCommand) {
-            passTimeCommandProcessor.issue_command((PassCommand) c);
+            passTimeCommandProcessor.issue_command(c);
         } else if (c instanceof TransferCommand) {
-            transferCommandProcessor.issue_command((TransferCommand) c);
+            transferCommandProcessor.issue_command(c);
         } else if (c instanceof WithdrawalCommand) {
-            withdrawalCommandProcessor.issue_command((WithdrawalCommand) c);
+            withdrawalCommandProcessor.issue_command(c);
         }
     }
 }

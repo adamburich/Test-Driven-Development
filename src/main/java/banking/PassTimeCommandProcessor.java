@@ -8,7 +8,7 @@ public class PassTimeCommandProcessor {
         this.bank = b;
     }
 
-    public void issue_command(PassCommand cmd) {
+    public void issue_command(Command cmd) {
         String[] payload = cmd.getPayload();
         int num = Integer.parseInt(payload[0]);
 

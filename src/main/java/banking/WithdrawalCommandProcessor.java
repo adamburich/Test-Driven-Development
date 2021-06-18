@@ -8,7 +8,7 @@ public class WithdrawalCommandProcessor {
         this.bank = b;
     }
 
-    public void issue_command(WithdrawalCommand cmd) {
+    public void issue_command(Command cmd) {
         String[] payload = cmd.getPayload();
         bank.getAccount(Integer.parseInt(payload[0])).withdraw(Double.parseDouble(payload[1]));
     }
