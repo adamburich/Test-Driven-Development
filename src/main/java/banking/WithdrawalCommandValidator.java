@@ -1,8 +1,8 @@
 package banking;
 
 public class WithdrawalCommandValidator {
-    public boolean withdrawal_target_is_int, withdrawal_amount_is_double, savings_monthly_withdrawal_not_used, withdrawing_legal_amount,
-            withdrawing_from_nonempty_account, withdrawing_from_cd_account_of_age, withdrawing_from_real_account = false;
+    public boolean withdrawal_target_is_int, withdrawal_amount_is_double, withdrawing_legal_amount,
+            withdrawing_from_nonempty_account, not_flagged, withdrawing_from_real_account = false;
 
     private Bank bank;
 
@@ -15,44 +15,24 @@ public class WithdrawalCommandValidator {
         String account_id = payload[0];
         String amount_str = payload[1];
         Double amount = Double.parseDouble(amount_str);
-        if (!account_id.matches(Validator.DIGITS)) {
-            withdrawal_target_is_int = true;
-        }
-        if (!amount_str.matches(Validator.DIGITS)) {
-            withdrawal_amount_is_double = true;
-        }
+        withdrawal_target_is_int = !account_id.matches(Validator.DIGITS);
+        withdrawal_amount_is_double = !amount_str.matches(Validator.DIGITS);
         if (withdrawal_target_is_int && withdrawal_amount_is_double && (bank.getAccount(Integer.parseInt(account_id)) != null)) {
             withdrawing_from_real_account = true;
             Account account = bank.getAccount(Integer.parseInt(account_id));
             if (account.getBalance() > 0) {
                 withdrawing_from_nonempty_account = true;
                 if (account instanceof SavingsAccount) {
-                    if (amount <= 1000) {
-                        withdrawing_legal_amount = true;
-                    }
-                    if (!((SavingsAccount) account).withdrawalUsed()) {
-                        savings_monthly_withdrawal_not_used = true;
-                    }
-                    withdrawing_from_cd_account_of_age = true;
+                    withdrawing_legal_amount = amount <= 1000;
+                    not_flagged = !((SavingsAccount) account).withdrawalUsed();
                 } else if (account instanceof CheckingAccount) {
-                    if (amount <= 400) {
-                        withdrawing_legal_amount = true;
-                    }
-                    savings_monthly_withdrawal_not_used = true;
-                    withdrawing_from_cd_account_of_age = true;
+                    withdrawing_legal_amount = amount <= 400;
                 } else if (account instanceof CDAccount) {
-                    if (account.age() >= 12) {
-                        withdrawing_from_cd_account_of_age = true;
-                    }
-                    if (amount >= account.getBalance()) {
-                        withdrawing_legal_amount = true;
-                    }
-                    savings_monthly_withdrawal_not_used = true;
+                    not_flagged = account.age() >= 12;
+                    withdrawing_legal_amount = amount >= account.getBalance();
                 }
             }
-
-
         }
-        return withdrawal_target_is_int && withdrawal_amount_is_double && savings_monthly_withdrawal_not_used && withdrawing_legal_amount && withdrawing_from_nonempty_account && withdrawing_from_cd_account_of_age && withdrawing_from_real_account;
+        return withdrawal_target_is_int && withdrawal_amount_is_double && withdrawing_legal_amount && withdrawing_from_nonempty_account && withdrawing_from_real_account;
     }
 }
