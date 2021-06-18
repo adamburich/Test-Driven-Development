@@ -29,17 +29,17 @@ public class CreateCommandValidator {
         }
         if (VALID_ACCOUNT_TYPES.contains(shouldbe_type.toLowerCase())) {
             valid_type_given = true;
-            if (!shouldbe_id.matches(".*[a-z].*") && shouldbe_id.length() == 8) {
+            if (!shouldbe_id.matches(Validator.DIGITS) && shouldbe_id.length() == 8) {
                 valid_id_format = true;
                 if (bank.getAccount(Integer.parseInt(shouldbe_id)) == null) {
                     id_is_not_duplicate = true;
                 }
             }
-            if (!shouldbe_apr.matches(".*[a-z].*") && (Double.parseDouble(shouldbe_apr) >= 0 && Double.parseDouble(shouldbe_apr) <= 10)) {
+            if (!shouldbe_apr.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_apr) >= 0 && Double.parseDouble(shouldbe_apr) <= 10)) {
                 valid_apr_given = true;
             }
             if (shouldbe_type.equals("cd")) {
-                if (shouldbe_balance != null && !shouldbe_balance.matches(".*[a-z].*") && (Double.parseDouble(shouldbe_balance) >= 0 && Double.parseDouble(shouldbe_balance) <= 10000)) {
+                if (shouldbe_balance != null && !shouldbe_balance.matches(Validator.DIGITS) && (Double.parseDouble(shouldbe_balance) >= 0 && Double.parseDouble(shouldbe_balance) <= 10000)) {
                     valid_init_balance = true;
                 }
             } else {

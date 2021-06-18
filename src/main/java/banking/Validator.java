@@ -2,9 +2,10 @@ package banking;
 
 public class Validator {
 
+    public static final String DIGITS = ".*[a-z].*";
+
     public boolean cmd_has_valid_instruction, cmd_has_valid_payload_size, valid_id_format,
             valid_apr_given, valid_init_balance, valid_type_given = false;
-
     private Bank bank;
     private PassTimeCommandValidator passTimeCommandValidator = new PassTimeCommandValidator(bank);
     private DepositCommandValidator depositCommandValidator = new DepositCommandValidator(bank);

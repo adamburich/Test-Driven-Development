@@ -13,7 +13,7 @@ public class DepositCommandValidator {
         String[] payload = c.getPayload();
         String shouldbe_id = payload[0];
         String shouldbe_amount = payload[1];
-        if (!shouldbe_id.matches(".*[a-z].*") && shouldbe_id.length() == 8) {
+        if (!shouldbe_id.matches(Validator.DIGITS) && shouldbe_id.length() == 8) {
             valid_id_format = true;
             Account target = bank.getAccount(Integer.parseInt(shouldbe_id));
             if (target != null) {

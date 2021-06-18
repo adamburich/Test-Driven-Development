@@ -15,10 +15,10 @@ public class WithdrawalCommandValidator {
         String account_id = payload[0];
         String amount_str = payload[1];
         Double amount = Double.parseDouble(amount_str);
-        if (!account_id.matches(".*[a-z].*")) {
+        if (!account_id.matches(Validator.DIGITS)) {
             withdrawal_target_is_int = true;
         }
-        if (!amount_str.matches(".*[a-z].*")) {
+        if (!amount_str.matches(Validator.DIGITS)) {
             withdrawal_amount_is_double = true;
         }
         if (withdrawal_target_is_int && withdrawal_amount_is_double) {

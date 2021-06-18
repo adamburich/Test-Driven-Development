@@ -20,13 +20,13 @@ public class TransferCommandValidator {
         String amount_string = payload[2];
         String withdraw_cmd_string = "withdraw " + transfer_source + " " + amount_string;
         String deposit_cmd_string = "deposit " + transfer_target + " " + amount_string;
-        if (!transfer_source.matches(".*[a-z].*")) {
+        if (!transfer_source.matches(Validator.DIGITS)) {
             transfer_source_is_int = true;
         }
-        if (!transfer_target.matches(".*[a-z].*")) {
+        if (!transfer_target.matches(Validator.DIGITS)) {
             transfer_target_is_int = true;
         }
-        if (!amount_string.matches(".*[a-z].*")) {
+        if (!amount_string.matches(Validator.DIGITS)) {
             transfer_amount_is_double = true;
         }
         if (transfer_amount_is_double && transfer_target_is_int && transfer_source_is_int) {
