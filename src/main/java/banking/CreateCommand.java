@@ -7,7 +7,6 @@ public class CreateCommand extends Command {
     public CreateCommand(String createCommand) {
         super(createCommand);
         this.valid_instruction = "create";
-        Integer create_payload_len[] = {3, 4};
-        this.valid_payload_length = Arrays.asList(create_payload_len);
+        this.valid_payload_length = Arrays.asList(new Integer[]{3, 4});
     }
 }
