@@ -54,5 +54,22 @@ public class MasterControlTest {
         assertEquals("Deposit 12345678 5000", actual.get(4));
     }
 
+    @Test
+    void sample_make_sure() {
+        input.add("Create savings 12345678 0.6");
+        input.add("Deposit 12345678 700");
+        input.add("Deposit 12345678 5000");
+        input.add("creAte cHecKing 98765432 0.01");
+        input.add("Deposit 98765432 300");
+        input.add("Transfer 98765432 12345678 300");
+        input.add("Pass 1");
+        input.add("Create cd 23456789 1.2 2000");
+        input.add("Create checking 22346678 1.2");
+        input.add("Deposit 22346678 100");
+        List<String> actual = masterControl.start(input);
+
+        assertEquals(7, actual.size());
+    }
+
 
 }
