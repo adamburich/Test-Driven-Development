@@ -47,7 +47,7 @@ public class WithdrawalCommandValidatorTest {
         sa.setBalance(25000);
         cd.setBalance(25000);
         bank.passTime(12);
-        WithdrawalCommand wc_cd = new WithdrawalCommand("withdraw 12345678 500");
+        WithdrawalCommand wc_cd = new WithdrawalCommand("withdraw 12345678 " + (cd.getBalance() - 1));
         WithdrawalCommand wc_sa = new WithdrawalCommand("withdraw 23456789 1001");
         WithdrawalCommand wc_ca = new WithdrawalCommand("withdraw 87654321 401");
         boolean all_false = false;
@@ -61,7 +61,7 @@ public class WithdrawalCommandValidatorTest {
         sa.setBalance(25000);
         cd.setBalance(25000);
         bank.passTime(12);
-        WithdrawalCommand wc_cd = new WithdrawalCommand("withdraw 12345678 30000");
+        WithdrawalCommand wc_cd = new WithdrawalCommand("withdraw 12345678 " + (cd.getBalance()));
         WithdrawalCommand wc_sa = new WithdrawalCommand("withdraw 23456789 1000");
         WithdrawalCommand wc_ca = new WithdrawalCommand("withdraw 87654321 400");
         boolean all_true = false;
