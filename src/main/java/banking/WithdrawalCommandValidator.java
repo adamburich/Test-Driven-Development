@@ -24,6 +24,7 @@ public class WithdrawalCommandValidator {
             not_flagged = !((SavingsAccount) account).withdrawalUsed();
         } else if (account instanceof CheckingAccount) {
             withdrawing_legal_amount = Double.parseDouble(amount_str) <= 400;
+            not_flagged = withdrawing_legal_amount;
         } else if (account instanceof CDAccount) {
             not_flagged = account.age() >= 12;
             withdrawing_legal_amount = Double.parseDouble(amount_str) >= account.getBalance();
