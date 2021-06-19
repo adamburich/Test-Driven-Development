@@ -34,18 +34,19 @@ public class Bank {
         accounts.remove(id);
     }
 
-    public void reduceAccountBalance(int id, double change) {
-        if (accounts.get(id).getBalance() - change >= 0 && accounts.get(id).getBalance() > 0) {
-            accounts.get(id).withdraw(change);
-        }
-    }
-
-    public void increaseAccountBalance(int id, double change) {
-        if (accounts.get(id).getBalance() + change >= 0) {
-            accounts.get(id).deposit(change);
-        }
-    }
-
+    /**
+     * public void reduceAccountBalance(int id, double change) {
+     * if (accounts.get(id).getBalance() - change >= 0 && accounts.get(id).getBalance() > 0) {
+     * accounts.get(id).withdraw(change);
+     * }
+     * }
+     * <p>
+     * public void increaseAccountBalance(int id, double change) {
+     * if (accounts.get(id).getBalance() + change >= 0) {
+     * accounts.get(id).deposit(change);
+     * }
+     * }
+     */
     public void transferFunds(Account source, Account destination, double amount) {
         accounts.get(source.getID()).withdraw(amount);
         accounts.get(destination.getID()).deposit(amount);

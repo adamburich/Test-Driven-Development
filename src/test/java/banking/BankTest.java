@@ -61,20 +61,18 @@ public class BankTest {
         assertTrue(bank.getAccount(ID) == null);
     }
 
-    @Test
-    void withdraw_from_checking_account() {
-        bank.addAccount(new CheckingAccount(ID, BALANCE + 100));
-        bank.reduceAccountBalance(ID, 100);
-        assertEquals(BALANCE, bank.getAccount(ID).getBalance());
-    }
-
-    @Test
-    void withdraw_from_cd_account() {
-        bank.addAccount(new SavingsAccount(ID, BALANCE + 100));
-        bank.reduceAccountBalance(ID, 100);
-        assertEquals(BALANCE, bank.getAccount(ID).getBalance());
-    }
-
+    /**
+     * @Test void withdraw_from_checking_account() {
+     * bank.addAccount(new CheckingAccount(ID, BALANCE + 100));
+     * bank.reduceAccountBalance(ID, 100);
+     * assertEquals(BALANCE, bank.getAccount(ID).getBalance());
+     * }
+     * @Test void withdraw_from_cd_account() {
+     * bank.addAccount(new SavingsAccount(ID, BALANCE + 100));
+     * bank.reduceAccountBalance(ID, 100);
+     * assertEquals(BALANCE, bank.getAccount(ID).getBalance());
+     * }
+     */
     @Test
     void withdraw_from_savings_account() {
         bank.addAccount(new SavingsAccount(ID, APR));
@@ -86,28 +84,28 @@ public class BankTest {
     @Test
     void deposit_to_account() {
         bank.addAccount(new CheckingAccount(ID));
-        bank.increaseAccountBalance(ID, 250);
+        bank.getAccount(ID).deposit(250);
         assertEquals(250, bank.getAccount(ID).getBalance());
     }
 
     @Test
     void deposit_to_checking_account() {
         bank.addAccount(new CheckingAccount(ID, BALANCE));
-        bank.increaseAccountBalance(ID, 100);
+        bank.getAccount(ID).deposit(100);
         assertEquals(BALANCE + 100, bank.getAccount(ID).getBalance());
     }
 
     @Test
     void deposit_to_savings_account() {
         bank.addAccount(new SavingsAccount(ID, BALANCE));
-        bank.increaseAccountBalance(ID, 100);
+        bank.getAccount(ID).deposit(100);
         assertEquals(BALANCE + 100, bank.getAccount(ID).getBalance());
     }
 
     @Test
     void deposit_to_cd_account() {
         bank.addAccount(new CDAccount(ID, APR, BALANCE));
-        bank.increaseAccountBalance(ID, 100);
+        bank.getAccount(ID).deposit(100);
         assertEquals(BALANCE + 100, bank.getAccount(ID).getBalance());
     }
 
@@ -206,22 +204,21 @@ public class BankTest {
         a1.withdraw(99999);
         assertTrue(a1.getBalance() == 0);
     }
+/**
+ @Test void reduce_account_balance_reduces_correctly() {
+ Account a1 = new SavingsAccount(ID, 1);
+ bank.addAccount(a1);
+ a1.setBalance(5000);
+ bank.reduceAccountBalance(ID, 500);
+ assertEquals(a1.getBalance(), 4500);
+ }
 
-    @Test
-    void reduce_account_balance_reduces_correctly() {
-        Account a1 = new SavingsAccount(ID, 1);
-        bank.addAccount(a1);
-        a1.setBalance(5000);
-        bank.reduceAccountBalance(ID, 500);
-        assertEquals(a1.getBalance(), 4500);
-    }
-
-    @Test
-    void increase_account_balance_increases_correctly() {
-        Account a1 = new SavingsAccount(ID, 1);
-        bank.addAccount(a1);
-        a1.setBalance(5000);
-        bank.increaseAccountBalance(ID, 500);
-        assertEquals(a1.getBalance(), 5500);
-    }
+ @Test void increase_account_balance_increases_correctly() {
+ Account a1 = new SavingsAccount(ID, 1);
+ bank.addAccount(a1);
+ a1.setBalance(5000);
+ bank.increaseAccountBalance(ID, 500);
+ assertEquals(a1.getBalance(), 5500);
+ }
+ */
 }
