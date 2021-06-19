@@ -28,6 +28,6 @@ public class WithdrawalCommandValidator {
             not_flagged = account.age() >= 12;
             withdrawing_legal_amount = Double.parseDouble(amount_str) >= account.getBalance();
         }
-        return withdrawal_target_is_int && withdrawal_amount_is_double && withdrawing_legal_amount && withdrawing_from_nonempty_account && withdrawing_from_real_account;
+        return withdrawal_target_is_int && withdrawal_amount_is_double && withdrawing_legal_amount && withdrawing_from_nonempty_account && withdrawing_from_real_account && not_flagged;
     }
 }
