@@ -46,12 +46,27 @@ public class WithdrawalCommandValidatorTest {
         ca.setBalance(25000);
         sa.setBalance(25000);
         cd.setBalance(25000);
+        bank.passTime(12);
         WithdrawalCommand wc_cd = new WithdrawalCommand("withdraw 12345678 500");
-        WithdrawalCommand wc_sa = new WithdrawalCommand("withdraw 23456789 25000");
-        WithdrawalCommand wc_ca = new WithdrawalCommand("withdraw 87654321 25000");
+        WithdrawalCommand wc_sa = new WithdrawalCommand("withdraw 23456789 1001");
+        WithdrawalCommand wc_ca = new WithdrawalCommand("withdraw 87654321 401");
         boolean all_false = false;
         all_false = (wcv.validate(wc_cd) == wcv.validate(wc_sa) == wcv.validate(wc_ca)) == false;
         assertEquals(all_false, true);
+    }
+
+    @Test
+    void attempt_to_withdraw_legal_amount_is_valid() {
+        ca.setBalance(25000);
+        sa.setBalance(25000);
+        cd.setBalance(25000);
+        bank.passTime(12);
+        WithdrawalCommand wc_cd = new WithdrawalCommand("withdraw 12345678 30000");
+        WithdrawalCommand wc_sa = new WithdrawalCommand("withdraw 23456789 1000");
+        WithdrawalCommand wc_ca = new WithdrawalCommand("withdraw 87654321 400");
+        boolean all_true = false;
+        all_true = (wcv.validate(wc_cd) == wcv.validate(wc_sa) == wcv.validate(wc_ca)) == true;
+        assertEquals(all_true, true);
     }
 
     @Test
