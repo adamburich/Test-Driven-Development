@@ -206,4 +206,22 @@ public class BankTest {
         a1.withdraw(99999);
         assertTrue(a1.getBalance() == 0);
     }
+
+    @Test
+    void reduce_account_balance_reduces_correctly() {
+        Account a1 = new SavingsAccount(ID, 1);
+        bank.addAccount(a1);
+        a1.setBalance(5000);
+        bank.reduceAccountBalance(ID, 500);
+        assertEquals(a1.getBalance(), 4500);
+    }
+
+    @Test
+    void increase_account_balance_increases_correctly() {
+        Account a1 = new SavingsAccount(ID, 1);
+        bank.addAccount(a1);
+        a1.setBalance(5000);
+        bank.increaseAccountBalance(ID, 500);
+        assertEquals(a1.getBalance(), 5500);
+    }
 }
