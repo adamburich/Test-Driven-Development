@@ -47,11 +47,7 @@ public abstract class Account {
     }
 
     public void setBalance(double bal) {
-        if (bal >= 0) {
-            balance = bal;
-        } else {
-            balance = 0;
-        }
+        balance = bal;
     }
 
     public double getAPR() {
@@ -59,9 +55,7 @@ public abstract class Account {
     }
 
     public void withdraw(double amount) {
-        if (this.getBalance() > 0) {
-            this.setBalance(this.getBalance() - amount);
-        }
+        this.setBalance(this.getBalance() - amount);
     }
 
     public void deposit(double amount) {
