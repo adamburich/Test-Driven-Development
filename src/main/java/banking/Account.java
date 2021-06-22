@@ -1,5 +1,7 @@
 package banking;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public abstract class Account {
@@ -43,7 +45,9 @@ public abstract class Account {
     }
 
     public double getBalance() {
-        return balance;
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        formatter.setRoundingMode(RoundingMode.FLOOR);
+        return Double.parseDouble(formatter.format(balance));
     }
 
     public void setBalance(double bal) {

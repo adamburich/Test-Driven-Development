@@ -209,4 +209,11 @@ public class AccountTest {
         assertEquals(account.getBalance(), 0);
     }
 
+    @Test
+    void getbalance_rounds_to_two_decimals() {
+        Account a1 = new SavingsAccount(ID, 1);
+        a1.setBalance(5000.1235678);
+        assertTrue(a1.getBalance() == 5000.12);
+    }
+
 }

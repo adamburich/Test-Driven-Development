@@ -1,7 +1,5 @@
 package banking;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,9 +64,7 @@ public class Bank {
     }
 
     public String displayAccount(Account account) {
-        DecimalFormat formatter = new DecimalFormat("0.00");
-        formatter.setRoundingMode(RoundingMode.FLOOR);
-        return account.getType() + " " + account.getID() + " " + formatter.format(account.getBalance()) + " " + formatter.format(account.getAPR());
+        return account.getType() + " " + account.getID() + " " + account.getBalance() + " " + account.getAPR();
     }
 
     public ArrayList<String> output() {
