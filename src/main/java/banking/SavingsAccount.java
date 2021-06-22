@@ -20,12 +20,8 @@ public class SavingsAccount extends Account {
     @Override
     public void withdraw(double amount) {
         if (!withdrawalUsed()) {
-            if (this.getBalance() > 0) {
-                this.setBalance(this.getBalance() - amount);
-            }
-            if (this.getBalance() < 0) {
-                this.setBalance(0);
-            }
+            //this.setBalance(this.getBalance() - amount);
+            super.withdraw(amount);
             monthly_withdrawal_used = true;
         }
     }
