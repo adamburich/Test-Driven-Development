@@ -62,15 +62,10 @@ public abstract class Account {
         if (this.getBalance() > 0) {
             this.setBalance(this.getBalance() - amount);
         }
-        if (this.getBalance() < 0) {
-            this.setBalance(0);
-        }
     }
 
     public void deposit(double amount) {
-        if (amount >= 0) {
-            this.setBalance(this.getBalance() + amount);
-        }
+        this.setBalance(this.getBalance() + amount);
     }
 
     public void awardAPR(int months) {

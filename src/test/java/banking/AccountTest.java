@@ -145,7 +145,42 @@ public class AccountTest {
     }
 
     @Test
-    void typeless_account_is_null() {
+    void attempt_set_below_zero_results_zero() {
+        account.setBalance(-1);
+        assertEquals(0, account.getBalance());
+    }
+
+    @Test
+    void attempt_set_zero_results_zero() {
+        account.setBalance(0);
+        assertEquals(0, account.getBalance());
+    }
+
+    @Test
+    void attempt_set_balance_one() {
+        account.setBalance(1);
+        assertEquals(1, account.getBalance());
+    }
+
+    @Test
+    void attempt_withdraw_one_withdraws_one() {
+        account.setBalance(500);
+        account.withdraw(1);
+        assertEquals(account.getBalance(), 499);
+    }
+
+    @Test
+    void attempt_withdraw_negative_one_withdraws_none() {
+        account.setBalance(500);
+        account.withdraw(1);
+        assertEquals(account.getBalance(), 499);
+    }
+
+    @Test
+    void attempt_withdraw_none_withdraws_none() {
+        account.setBalance(500);
+        account.withdraw(0);
+        assertEquals(account.getBalance(), 500);
     }
 
 }
