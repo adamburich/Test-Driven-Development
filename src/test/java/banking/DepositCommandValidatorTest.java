@@ -26,24 +26,24 @@ public class DepositCommandValidatorTest {
     void deposit_zero_is_valid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 0");
         DepositCommand next = new DepositCommand("deposit 2345678 0");
-        boolean both = dcv.validate(next) && dcv.validate(dc);
-        assertTrue(both);
+        assertTrue(dcv.validate(dc));
+        assertTrue(dcv.validate(next));
     }
 
     @Test
     void deposit_negative_one_invalid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 -1");
         DepositCommand next = new DepositCommand("deposit 2345678 -1");
-        boolean both = dcv.validate(next) && dcv.validate(dc);
         assertFalse(dcv.validate(dc));
+        assertFalse(dcv.validate(next));
     }
 
     @Test
     void deposit_one_valid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 1");
         DepositCommand next = new DepositCommand("deposit 2345678 1");
-        boolean both = dcv.validate(next) && dcv.validate(dc);
-        assertTrue(both);
+        assertTrue(dcv.validate(dc));
+        assertTrue(dcv.validate(next));
     }
 
     @Test
