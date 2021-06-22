@@ -74,7 +74,7 @@ public class CommandProcessorTest {
     void early_withdrawal_from_cd_fails() {
         Account a = new CDAccount(12345678, 1, 5000);
         bank.addAccount(a);
-        a.withdraw(10000);
+        processor.issue_command(new WithdrawalCommand("withdraw 12345678 5000"));
         assertTrue(a.getBalance() == 5000);
     }
 }

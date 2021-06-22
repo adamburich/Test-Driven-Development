@@ -204,6 +204,13 @@ public class BankTest {
         a1.withdraw(99999);
         assertTrue(a1.getBalance() == 0);
     }
+
+    @Test
+    void display_account_rounds_to_two_decimals() {
+        Account a1 = new SavingsAccount(ID, 1);
+        a1.setBalance(5000.1235678);
+        assertTrue((bank.displayAccount(a1).contains("5000.12")) && !(bank.displayAccount(a1).contains("5000.123")));
+    }
 /**
  @Test void reduce_account_balance_reduces_correctly() {
  Account a1 = new SavingsAccount(ID, 1);
