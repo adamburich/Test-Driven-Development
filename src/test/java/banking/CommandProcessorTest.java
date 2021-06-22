@@ -92,7 +92,8 @@ public class CommandProcessorTest {
         Account a = new CheckingAccount(12345678, 1);
         bank.addAccount(a);
         a.setBalance(5000);
-        WithdrawalCommand w = new WithdrawalCommand("withdraw 12345678 150");
+        Command w = new Command("withdraw 12345678 150");
+        w = w.identify_type();
         processor.issue_command(w);
         assertTrue(a.getBalance() == 4850);
     }

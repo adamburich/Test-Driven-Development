@@ -37,6 +37,7 @@ public class CommandProcessor {
                 passTimeCommandProcessor.issue_command((PassCommand) c);
                 break;
             default:
+                issue_command(c.identify_type());
                 break;
         }
     }
