@@ -4,7 +4,8 @@ public class CDAccount extends Account {
     private static String TYPE = "Cd";
 
     public CDAccount(int id, double apr, double bal) {
-        super(id, apr, bal);
+        super(id, apr);
+        super.setBalance(bal);
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class Account {
 
     private int ID;
+    private String TYPE;
     private double balance = 0;
     private double APR = 0;
     private int monthsOld = 0;
@@ -19,24 +20,16 @@ public abstract class Account {
         APR = apr;
     }
 
-    public Account(int id, double apr, double bal) {
-        ID = id;
-        if (bal >= 0) {
-            balance = bal;
-        }
-        APR = apr;
-    }
-
     public int getID() {
         return ID;
     }
 
     public String getType() {
-        return null;
+        return TYPE;
     }
 
-    public Account assignType(String type) {
-        switch (type.toUpperCase()) {
+    public Account assignType(String typ) {
+        switch (typ.toUpperCase()) {
             case "CHECKING":
                 return new CheckingAccount(this.ID, this.APR);
             case "SAVINGS":

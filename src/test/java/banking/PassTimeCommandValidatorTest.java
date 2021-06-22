@@ -47,4 +47,5 @@ public class PassTimeCommandValidatorTest {
         PassCommand pc = new PassCommand("pass 61");
         assertFalse(ptcv.validate(pc));
     }
+
 }

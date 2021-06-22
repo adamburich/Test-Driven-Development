@@ -144,5 +144,8 @@ public class AccountTest {
         assertEquals(0, account.getBalance());
     }
 
+    @Test
+    void typeless_account_is_null() {
+    }
 
 }
