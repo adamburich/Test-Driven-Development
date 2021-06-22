@@ -145,12 +145,6 @@ public class AccountTest {
     }
 
     @Test
-    void attempt_set_below_zero_results_zero() {
-        account.setBalance(-1);
-        assertEquals(0, account.getBalance());
-    }
-
-    @Test
     void attempt_set_zero_results_zero() {
         account.setBalance(0);
         assertEquals(0, account.getBalance());
