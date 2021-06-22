@@ -45,11 +45,11 @@ public abstract class Account {
     }
 
     public double getBalance() {
-        if (balance >= 0) {
-            return balance;
-        } else {
+        if (balance < 0) {
             setBalance(0);
             return 0;
+        } else {
+            return balance;
         }
     }
 
