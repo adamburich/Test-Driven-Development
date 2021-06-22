@@ -16,11 +16,13 @@ public abstract class Account {
 
     public Account(int id) {
         ID = id;
+        formatter.setRoundingMode(RoundingMode.FLOOR);
     }
 
     public Account(int id, double apr) {
         ID = id;
         APR = apr;
+        formatter.setRoundingMode(RoundingMode.FLOOR);
     }
 
     public int getID() {
@@ -46,24 +48,23 @@ public abstract class Account {
     }
 
     public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double bal) {
-        if (bal >= 0) {
-            balance = bal;
+        if (balance >= 0) {
+            return balance;
         } else {
-            balance = 0;
+            setBalance(0);
+            return 0;
         }
     }
 
+    public void setBalance(double bal) {
+        balance = bal;
+    }
+
     public String displayAPR() {
-        formatter.setRoundingMode(RoundingMode.FLOOR);
         return formatter.format(APR);
     }
 
     public String displayBalance() {
-        formatter.setRoundingMode(RoundingMode.FLOOR);
         return formatter.format(balance);
     }
 
