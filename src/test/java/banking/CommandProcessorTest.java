@@ -83,7 +83,8 @@ public class CommandProcessorTest {
         Account a = new CDAccount(12345678, 1, 5000);
         bank.addAccount(a);
         bank.passTime(12);
-        processor.issue_command(new WithdrawalCommand("withdraw 12345678 15000"));
+        WithdrawalCommand w = new WithdrawalCommand("withdraw 12345678 15000");
+        processor.issue_command(w);
         assertTrue(a.getBalance() == 0);
     }
 }
