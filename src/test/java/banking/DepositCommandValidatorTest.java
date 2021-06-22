@@ -26,47 +26,53 @@ public class DepositCommandValidatorTest {
     void deposit_zero_is_valid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 0");
         DepositCommand next = new DepositCommand("deposit 2345678 0");
-        assertTrue(dcv.validate(dc));
-        assertTrue(dcv.validate(next));
+        boolean dc_valid = dcv.validate(dc);
+        boolean next_valid = dcv.validate(next);
+        assertTrue((dc_valid && next_valid));
     }
 
     @Test
     void deposit_negative_one_invalid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 -1");
         DepositCommand next = new DepositCommand("deposit 2345678 -1");
-        assertFalse(dcv.validate(dc));
-        assertFalse(dcv.validate(next));
+        boolean dc_valid = dcv.validate(dc);
+        boolean next_valid = dcv.validate(next);
+        assertFalse((dc_valid && next_valid));
     }
 
     @Test
     void deposit_one_valid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 1");
         DepositCommand next = new DepositCommand("deposit 2345678 1");
-        assertTrue(dcv.validate(dc));
-        assertTrue(dcv.validate(next));
+        boolean dc_valid = dcv.validate(dc);
+        boolean next_valid = dcv.validate(next);
+        assertTrue((dc_valid && next_valid));
     }
 
     @Test
     void deposit_under_cap_is_valid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 999");
         DepositCommand next = new DepositCommand("deposit 2345678 2499");
-        assertTrue(dcv.validate(dc));
-        assertTrue(dcv.validate(next));
+        boolean dc_valid = dcv.validate(dc);
+        boolean next_valid = dcv.validate(next);
+        assertTrue((dc_valid && next_valid));
     }
 
     @Test
     void deposit_cap_is_valid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 1000");
         DepositCommand next = new DepositCommand("deposit 2345678 2500");
-        assertTrue(dcv.validate(dc));
-        assertTrue(dcv.validate(next));
+        boolean dc_valid = dcv.validate(dc);
+        boolean next_valid = dcv.validate(next);
+        assertTrue((dc_valid && next_valid));
     }
 
     @Test
     void deposit_over_cap_is_invalid() {
         DepositCommand dc = new DepositCommand("deposit 87654321 1001");
         DepositCommand next = new DepositCommand("deposit 2345678 2501");
-        assertFalse(dcv.validate(dc));
-        assertFalse(dcv.validate(next));
+        boolean dc_valid = dcv.validate(dc);
+        boolean next_valid = dcv.validate(next);
+        assertFalse((dc_valid && next_valid));
     }
 }

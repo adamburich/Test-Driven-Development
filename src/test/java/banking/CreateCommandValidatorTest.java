@@ -46,6 +46,12 @@ public class CreateCommandValidatorTest {
     }
 
     @Test
+    void create_with_valid_zero_apr() {
+        boolean cc = ccv.validate(new CreateCommand("create checking 12345678 0"));
+        assertTrue(cc);
+    }
+
+    @Test
     void create_cd_with_negative_init() {
         boolean cc = ccv.validate(new CreateCommand("create cd 12345678 -1 5"));
         assertFalse(cc);

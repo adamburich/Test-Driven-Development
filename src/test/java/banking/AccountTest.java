@@ -177,4 +177,36 @@ public class AccountTest {
         assertEquals(account.getBalance(), 500);
     }
 
+    @Test
+    void attempt_negative_setbalance_sets_zero_instead() {
+        account.setBalance(-500);
+        assertEquals(account.getBalance(), 0);
+    }
+
+    @Test
+    void attempt_zero_setbalance_sets_zero() {
+        account.setBalance(0);
+        assertEquals(account.getBalance(), 0);
+    }
+
+    @Test
+    void attempt_one_setbalance_sets_one() {
+        account.setBalance(1);
+        assertEquals(account.getBalance(), 1);
+    }
+
+    @Test
+    void attempt_withdraw_from_zero_withdraws_zero() {
+        account.setBalance(0);
+        account.withdraw(500);
+        assertEquals(account.getBalance(), 0);
+    }
+
+    @Test
+    void attempt_withdraw_excess_of_balance_empties_account() {
+        account.setBalance(1);
+        account.withdraw(10);
+        assertEquals(account.getBalance(), 0);
+    }
+
 }
