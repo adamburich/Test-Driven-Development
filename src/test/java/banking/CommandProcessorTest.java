@@ -97,4 +97,14 @@ public class CommandProcessorTest {
         processor.issue_command(w);
         assertTrue(a.getBalance() == 4850);
     }
+
+    @Test
+    void issue_untyped_command_identifies_and_issues_command() {
+        Account a = new CheckingAccount(12345678, 1);
+        bank.addAccount(a);
+        a.setBalance(5000);
+        Command w = new Command("withdraw 12345678 150");
+        processor.issue_command(w);
+        assertTrue(a.getBalance() == 4850);
+    }
 }

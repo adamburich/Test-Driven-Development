@@ -164,13 +164,6 @@ public class AccountTest {
     }
 
     @Test
-    void attempt_withdraw_negative_one_withdraws_none() {
-        account.setBalance(500);
-        account.withdraw(-1);
-        assertEquals(account.getBalance(), 500);
-    }
-
-    @Test
     void attempt_withdraw_none_withdraws_none() {
         account.setBalance(500);
         account.withdraw(0);

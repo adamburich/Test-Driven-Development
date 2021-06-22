@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public abstract class Account {
 
+    DecimalFormat formatter = new DecimalFormat("0.00");
     private int ID;
     private String TYPE;
     private double balance = 0;
@@ -57,13 +58,11 @@ public abstract class Account {
     }
 
     public String displayAPR() {
-        DecimalFormat formatter = new DecimalFormat("0.00");
         formatter.setRoundingMode(RoundingMode.FLOOR);
         return formatter.format(APR);
     }
 
     public String displayBalance() {
-        DecimalFormat formatter = new DecimalFormat("0.00");
         formatter.setRoundingMode(RoundingMode.FLOOR);
         return formatter.format(balance);
     }
@@ -73,9 +72,7 @@ public abstract class Account {
     }
 
     public void withdraw(double amount) {
-        if (this.getBalance() > 0 && amount >= 0) {
-            this.setBalance(this.getBalance() - amount);
-        }
+        this.setBalance(this.getBalance() - amount);
     }
 
     public void deposit(double amount) {
