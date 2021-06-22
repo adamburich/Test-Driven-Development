@@ -210,10 +210,16 @@ public class AccountTest {
     }
 
     @Test
-    void getbalance_rounds_to_two_decimals() {
+    void displayBalance_rounds_to_two_decimals() {
         Account a1 = new SavingsAccount(ID, 1);
         a1.setBalance(5000.1235678);
-        assertTrue(a1.getBalance() == 5000.12);
+        assertTrue(a1.displayBalance().equals("5000.12"));
+    }
+
+    @Test
+    void displayAPR_rounds_to_two_decimals() {
+        Account a1 = new SavingsAccount(ID, 1.234567);
+        assertTrue(a1.displayAPR().equals("1.23"));
     }
 
 }

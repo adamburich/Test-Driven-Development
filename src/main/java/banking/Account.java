@@ -45,9 +45,7 @@ public abstract class Account {
     }
 
     public double getBalance() {
-        DecimalFormat formatter = new DecimalFormat("0.00");
-        formatter.setRoundingMode(RoundingMode.FLOOR);
-        return Double.parseDouble(formatter.format(balance));
+        return balance;
     }
 
     public void setBalance(double bal) {
@@ -56,6 +54,18 @@ public abstract class Account {
         } else {
             balance = 0;
         }
+    }
+
+    public String displayAPR() {
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        formatter.setRoundingMode(RoundingMode.FLOOR);
+        return formatter.format(APR);
+    }
+
+    public String displayBalance() {
+        DecimalFormat formatter = new DecimalFormat("0.00");
+        formatter.setRoundingMode(RoundingMode.FLOOR);
+        return formatter.format(balance);
     }
 
     public double getAPR() {

@@ -64,7 +64,7 @@ public class Bank {
     }
 
     public String displayAccount(Account account) {
-        return account.getType() + " " + account.getID() + " " + account.getBalance() + " " + account.getAPR();
+        return account.getType() + " " + account.getID() + " " + account.displayBalance() + " " + account.displayAPR();
     }
 
     public ArrayList<String> output() {

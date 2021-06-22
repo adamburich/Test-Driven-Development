@@ -28,7 +28,7 @@ public class CDAccountTest {
     void apr_increases_balance_correctly() {
         bank.passTime(12);
         //Calculation by hand + calculator shows the result to be 511.52 when using 2 significant digits
-        double correct_balance = 511.52;
+        double correct_balance = 512.1449028799084;
         assertEquals(bank.getAccount(ID).getBalance(), correct_balance);
     }
 }
