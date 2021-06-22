@@ -1,6 +1,5 @@
 package banking;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -16,13 +15,11 @@ public abstract class Account {
 
     public Account(int id) {
         ID = id;
-        formatter.setRoundingMode(RoundingMode.FLOOR);
     }
 
     public Account(int id, double apr) {
         ID = id;
         APR = apr;
-        formatter.setRoundingMode(RoundingMode.FLOOR);
     }
 
     public int getID() {
