@@ -59,7 +59,7 @@ public abstract class Account {
     }
 
     public void withdraw(double amount) {
-        if (this.getBalance() > 0) {
+        if (this.getBalance() > 0 && amount >= 0) {
             this.setBalance(this.getBalance() - amount);
         }
     }
