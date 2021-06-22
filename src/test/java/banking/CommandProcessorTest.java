@@ -66,8 +66,7 @@ public class CommandProcessorTest {
         bank.getAccount(12345678).setBalance(1000);
         bank.addAccount(new SavingsAccount(23456789, 1));
         bank.transferFunds(bank.getAccount(12345678), bank.getAccount(23456789), 500);
-        assertTrue(bank.getAccount(12345678).getBalance() == 500);
-        assertTrue(bank.getAccount(23456789).getBalance() == 500);
+        assertTrue(bank.getAccount(12345678).getBalance() == 500 && bank.getAccount(23456789).getBalance() == 500);
     }
 
     @Test
@@ -86,5 +85,15 @@ public class CommandProcessorTest {
         WithdrawalCommand w = new WithdrawalCommand("withdraw 12345678 15000");
         processor.issue_command(w);
         assertTrue(a.getBalance() == 0);
+    }
+
+    @Test
+    void issue_valid_withdrawal_command() {
+        Account a = new CheckingAccount(12345678, 1);
+        bank.addAccount(a);
+        a.setBalance(5000);
+        WithdrawalCommand w = new WithdrawalCommand("withdraw 12345678 150");
+        processor.issue_command(w);
+        assertTrue(a.getBalance() == 4850);
     }
 }
