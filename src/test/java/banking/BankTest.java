@@ -61,18 +61,6 @@ public class BankTest {
         assertTrue(bank.getAccount(ID) == null);
     }
 
-    /**
-     * @Test void withdraw_from_checking_account() {
-     * bank.addAccount(new CheckingAccount(ID, BALANCE + 100));
-     * bank.reduceAccountBalance(ID, 100);
-     * assertEquals(BALANCE, bank.getAccount(ID).getBalance());
-     * }
-     * @Test void withdraw_from_cd_account() {
-     * bank.addAccount(new SavingsAccount(ID, BALANCE + 100));
-     * bank.reduceAccountBalance(ID, 100);
-     * assertEquals(BALANCE, bank.getAccount(ID).getBalance());
-     * }
-     */
     @Test
     void withdraw_from_savings_account() {
         bank.addAccount(new SavingsAccount(ID, APR));
@@ -211,21 +199,4 @@ public class BankTest {
         a1.setBalance(5000.1235678);
         assertTrue((bank.displayAccount(a1).contains("5000.12")) && !(bank.displayAccount(a1).contains("5000.123")));
     }
-/**
- @Test void reduce_account_balance_reduces_correctly() {
- Account a1 = new SavingsAccount(ID, 1);
- bank.addAccount(a1);
- a1.setBalance(5000);
- bank.reduceAccountBalance(ID, 500);
- assertEquals(a1.getBalance(), 4500);
- }
-
- @Test void increase_account_balance_increases_correctly() {
- Account a1 = new SavingsAccount(ID, 1);
- bank.addAccount(a1);
- a1.setBalance(5000);
- bank.increaseAccountBalance(ID, 500);
- assertEquals(a1.getBalance(), 5500);
- }
- */
 }

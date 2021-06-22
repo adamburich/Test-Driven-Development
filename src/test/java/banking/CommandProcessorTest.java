@@ -77,4 +77,13 @@ public class CommandProcessorTest {
         processor.issue_command(new WithdrawalCommand("withdraw 12345678 5000"));
         assertTrue(a.getBalance() == 5000);
     }
+
+    @Test
+    void on_time_withdrawal_from_cd_succeeds() {
+        Account a = new CDAccount(12345678, 1, 5000);
+        bank.addAccount(a);
+        bank.passTime(12);
+        processor.issue_command(new WithdrawalCommand("withdraw 12345678 15000"));
+        assertTrue(a.getBalance() == 0);
+    }
 }
