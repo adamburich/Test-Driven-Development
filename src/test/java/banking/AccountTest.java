@@ -215,4 +215,18 @@ public class AccountTest {
         assertTrue(a1.displayAPR().equals("1.23"));
     }
 
+    @Test
+    void get_balance_below_zero_sets_zero() {
+        Account a1 = new SavingsAccount(ID, 1.25);
+        a1.setBalance(-1);
+        assertEquals(a1.getBalance(), 0);
+    }
+
+    @Test
+    void get_balance_at_zero_stays_zero() {
+        Account a1 = new SavingsAccount(ID, 1.25);
+        a1.setBalance(0);
+        assertEquals(a1.getBalance(), 0);
+    }
+
 }
