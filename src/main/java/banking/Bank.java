@@ -52,14 +52,17 @@ public class Bank {
 
     public void passTime(int months) {
         for (Map.Entry<Integer, Account> acc : accounts.entrySet()) {
-            for (int i = 0; i < months; i++) {
-                acc.getValue().awardAPR(months);
-                acc.getValue().ageSingleMonth();
-                if (acc.getValue() instanceof SavingsAccount) {
-                    ((SavingsAccount) acc.getValue()).monthly_withdrawal_used = false;
-                }
-            }
+            adjustAccountAttributes(months, acc);
+        }
+    }
 
+    public void adjustAccountAttributes(int months, Map.Entry<Integer, Account> acc) {
+        for (int i = 0; i < months; i++) {
+            acc.getValue().awardAPR(months);
+            acc.getValue().ageSingleMonth();
+            if (acc.getValue() instanceof SavingsAccount) {
+                ((SavingsAccount) acc.getValue()).monthly_withdrawal_used = false;
+            }
         }
     }
 
