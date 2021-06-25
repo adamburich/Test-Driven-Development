@@ -21,10 +21,10 @@ public class TransferCommandProcessorTest {
         SavingsAccount sa = new SavingsAccount(23456789, .05);
         bank.addAccount(ca);
         bank.addAccount(sa);
-        ca.deposit(500);
+        ca.deposit(401);
         sa.deposit(500);
         tcp.issue_command(new TransferCommand("transfer 12345678 23456789 400"));
-        assertEquals(sa.getBalance() == 900, ca.getBalance() == 100);
+        assertEquals(sa.getBalance() == 900, ca.getBalance() == 1);
     }
 
     @Test

@@ -234,6 +234,13 @@ public class AccountTest {
     }
 
     @Test
+    void get_balance_at_one_stays_one() {
+        Account a1 = new SavingsAccount(ID, 1.25);
+        a1.setBalance(1);
+        assertEquals(a1.getBalance(), 1);
+    }
+
+    @Test
     void transaction_history_outputs_correctly() {
         CommandProcessor processor = new CommandProcessor(bank);
         Account checking1 = new CheckingAccount(ID, .1);
