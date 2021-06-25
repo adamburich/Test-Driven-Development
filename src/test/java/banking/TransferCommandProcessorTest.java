@@ -25,4 +25,27 @@ public class TransferCommandProcessorTest {
         tcp.issue_command(new TransferCommand("transfer 12345678 23456789 400"));
         assertEquals(sa.getBalance(), 900);
     }
+
+    @Test
+    void transfer_doesnt_create_magic_money() {
+        CheckingAccount c1 = new CheckingAccount(12345678, 1);
+        CheckingAccount c2 = new CheckingAccount(12345679, 1);
+        bank.addAccount(c1);
+        bank.addAccount(c2);
+        c1.setBalance(300);
+        tcp.issue_command(new TransferCommand("transfer 12345678 12345679 500"));
+        assertEquals(c2.getBalance(), 300);
+    }
+
+    @Test
+    void transfer_whole_balance_works() {
+        CheckingAccount c1 = new CheckingAccount(12345678, 1);
+        CheckingAccount c2 = new CheckingAccount(12345679, 1);
+        bank.addAccount(c1);
+        bank.addAccount(c2);
+        c1.setBalance(300);
+        tcp.issue_command(new TransferCommand("transfer 12345678 12345679 300"));
+        assertEquals(c2.getBalance(), 300);
+
+    }
 }

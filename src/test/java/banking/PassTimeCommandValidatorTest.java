@@ -48,4 +48,9 @@ public class PassTimeCommandValidatorTest {
         assertFalse(ptcv.validate(pc));
     }
 
+    @Test
+    void pass_decimal_is_invalid() {
+        PassCommand pc = new PassCommand("pass 6.0");
+        assertFalse(ptcv.validate(pc));
+    }
 }

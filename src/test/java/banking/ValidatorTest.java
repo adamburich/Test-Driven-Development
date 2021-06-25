@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidatorTest {
     Validator val;
@@ -73,5 +74,51 @@ public class ValidatorTest {
     void create_without_account_type() {
         CreateCommand c1 = new CreateCommand("create 11111111 .1");
         assertFalse(val.validate(c1));
+    }
+
+    @Test
+    void command_with_random_extra_spacing_invalid() {
+        CreateCommand c1 = new CreateCommand("create savings     12345678 .1");
+        assertFalse(val.validate(c1));
+    }
+
+    @Test
+    void command_with_extra_spacing_at_end_valid() {
+        CreateCommand c1 = new CreateCommand("create savings 12345678 .1     ");
+        assertTrue(val.validate(c1));
+    }
+
+    @Test
+    void command_with_numbers_in_instruction_invalid() {
+        Command c1 = new Command("cre1ate savings 12345678 .14");
+        assertFalse(val.validate(c1));
+    }
+
+    @Test
+    void command_with_letters_in_account_id_invalid() {
+        bank.addAccount(new CheckingAccount(12345678, 1));
+        bank.getAccount(12345678).setBalance(500);
+        CreateCommand c1 = new CreateCommand("create savings 123AB678 .14");
+        assertFalse(val.validate(c1));
+    }
+
+    @Test
+    void command_with_letters_in_balance_invalid() {
+        bank.addAccount(new CheckingAccount(12345678, 1));
+        bank.getAccount(12345678).setBalance(500);
+        WithdrawalCommand c1 = new WithdrawalCommand("withdraw 12345678 12A");
+        assertFalse(val.validate(c1));
+    }
+
+    @Test
+    void command_with_letters_in_apr_invalid() {
+        CreateCommand c1 = new CreateCommand("create savings 12345678 .1A34");
+        assertFalse(val.validate(c1));
+    }
+
+    @Test
+    void valid_create_command_is_valid() {
+        CreateCommand c1 = new CreateCommand("create savings 12345678 .14");
+        assertTrue(val.validate(c1));
     }
 }

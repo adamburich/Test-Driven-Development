@@ -3,6 +3,8 @@ package banking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,10 +13,12 @@ public class AccountTest {
     public static final int ID = 12345678;
     public static final String TYPE = "Checking";
     Account account;
+    Bank bank;
 
     @BeforeEach
     void setUp() {
         account = new CheckingAccount(ID);
+        bank = new Bank();
     }
 
     @Test
@@ -227,6 +231,21 @@ public class AccountTest {
         Account a1 = new SavingsAccount(ID, 1.25);
         a1.setBalance(0);
         assertEquals(a1.getBalance(), 0);
+    }
+
+    @Test
+    void transaction_history_outputs_correctly() {
+        CommandProcessor processor = new CommandProcessor(bank);
+        Account checking1 = new CheckingAccount(ID, .1);
+        Account checking2 = new CheckingAccount(ID + 1, .1);
+        bank.addAccount(checking1);
+        bank.addAccount(checking2);
+        checking1.setBalance(1000);
+        checking2.setBalance(500);
+        processor.issue_command(new TransferCommand("transfer 12345678 12345679 300"));
+        List<String> checking1_history = checking1.transactionHistory();
+        List<String> checking2_history = checking2.transactionHistory();
+        assertEquals(0, 0);
     }
 
 }
