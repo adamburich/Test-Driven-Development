@@ -2,6 +2,7 @@ package banking;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Bank {
@@ -51,7 +52,14 @@ public class Bank {
     }
 
     public void passTime(int months) {
-        for (Map.Entry<Integer, Account> acc : accounts.entrySet()) {
+        Iterator it = accounts.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, Account> acc = (Map.Entry) it.next();
+            if (acc.getValue().getBalance() == 0) {
+                it.remove();
+            } else if (acc.getValue().getBalance() < 100) {
+                acc.getValue().withdraw(25);
+            }
             adjustAccountAttributes(months, acc);
         }
     }

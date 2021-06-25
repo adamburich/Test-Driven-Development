@@ -25,4 +25,25 @@ public class PassTimeCommandProcessorTest {
         ptcp.issue_command(new PassCommand("pass 12"));
         assertTrue(ca.getBalance() > 500 && sa.getBalance() > 500);
     }
+
+    @Test
+    void empty_account_gets_closed_after_time_passes() {
+        CheckingAccount ca = new CheckingAccount(12345678, .05);
+        bank.addAccount(ca);
+        ptcp.issue_command(new PassCommand("pass 1"));
+        assertTrue(bank.getAccounts().size() == 0);
+    }
+
+    @Test
+    void account_below_100_loses_25_per_month() {
+        CheckingAccount ca = new CheckingAccount(12345678, 0);
+        bank.addAccount(ca);
+        ca.setBalance(75);
+        ptcp.issue_command(new PassCommand("pass 1"));
+        SavingsAccount sa = new SavingsAccount(23456789, 0);
+        bank.addAccount(sa);
+        sa.setBalance(75);
+        ptcp.issue_command(new PassCommand("pass 1"));
+        assertTrue(ca.getBalance() == 25 && sa.getBalance() == 50);
+    }
 }
