@@ -50,7 +50,8 @@ public class PassTimeCommandValidatorTest {
 
     @Test
     void pass_decimal_is_invalid() {
+        Validator val = new Validator(bank);
         PassCommand pc = new PassCommand("pass 6.0");
-        assertFalse(ptcv.validate(pc));
+        assertFalse(val.validate(pc));
     }
 }

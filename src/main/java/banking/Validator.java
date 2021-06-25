@@ -3,7 +3,7 @@ package banking;
 public class Validator {
 
     public static final String DIGITS = ".*[a-z].*";
-    public static final String INTS = "[0-9]*";
+    public static final String INTS = "\\d+";
     public static final String ID = "[0-9]{8}";
     public static final String DECIMALDIGITS = "(0|[1-9]\\d*)?(\\.\\d+)?";
     public boolean cmd_has_valid_instruction, cmd_has_valid_payload_size, valid_id_format,
@@ -29,38 +29,32 @@ public class Validator {
             cmd_has_valid_instruction = true;
             if (c.getValidPayloadLength().contains(c.getPayload().length)) {
                 cmd_has_valid_payload_size = true;
-                boolean proceed;
-                if (c instanceof CreateCommand) {
-                    proceed = c.getPayload()[1].matches(ID) && c.getPayload()[2].matches(DECIMALDIGITS);
-                    if (proceed) {
-                        out = createCommandValidator.validate(c);
-                    }
-                } else if (c instanceof DepositCommand) {
-                    proceed = c.getPayload()[0].matches(ID) && c.getPayload()[1].matches(DECIMALDIGITS);
-                    if (proceed) {
-                        out = depositCommandValidator.validate(c);
-                    }
-                } else if (c instanceof PassCommand) {
-                    proceed = c.getPayload()[0].matches(INTS);
-                    if (proceed) {
-                        out = passTimeCommandValidator.validate(c);
-                    }
-                } else if (c instanceof WithdrawalCommand) {
-                    proceed = c.getPayload()[0].matches(ID) && c.getPayload()[1].matches(DECIMALDIGITS);
-                    if (proceed) {
-                        out = withdrawalCommandValidator.validate(c);
-                    }
-                } else if (c instanceof TransferCommand) {
-                    proceed = c.getPayload()[0].matches(ID) && c.getPayload()[1].matches(ID) && c.getPayload()[2].matches(DECIMALDIGITS);
-                    if (proceed) {
-                        out = transferCommandValidator.validate(c);
-                    }
-                } else {
-                    return validate(c.identify_type());
+                if (c instanceof CreateCommand && proceed_create(c.getPayload())) {
+                    out = createCommandValidator.validate(c);
+                } else if (c instanceof DepositCommand && proceed_deposit_withdraw(c.getPayload())) {
+                    out = depositCommandValidator.validate(c);
+                } else if (c instanceof PassCommand && c.getPayload()[0].matches(INTS) && !c.getPayload()[0].contains(".")) {
+                    out = passTimeCommandValidator.validate(c);
+                } else if (c instanceof WithdrawalCommand && proceed_deposit_withdraw(c.getPayload())) {
+                    out = withdrawalCommandValidator.validate(c);
+                } else if (c instanceof TransferCommand && proceed_transfer(c.getPayload())) {
+                    out = transferCommandValidator.validate(c);
                 }
             }
         }
         return out;
+    }
+
+    public boolean proceed_create(String[] payload) {
+        return payload[1].matches(ID) && payload[2].matches(DECIMALDIGITS);
+    }
+
+    public boolean proceed_deposit_withdraw(String[] payload) {
+        return payload[0].matches(ID) && payload[1].matches(DECIMALDIGITS);
+    }
+
+    public boolean proceed_transfer(String[] payload) {
+        return payload[0].matches(ID) && payload[1].matches(ID) && payload[2].matches(DECIMALDIGITS);
     }
 
 }

@@ -12,11 +12,9 @@ public class PassTimeCommandValidator {
     public boolean validate(Command c) {
         String[] payload = c.getPayload();
         String shouldbe_months = payload[0];
-        if (!shouldbe_months.matches(Validator.DIGITS) && !shouldbe_months.contains(".")) {
-            passtime_payload_is_int = true;
-            if (Integer.parseInt(shouldbe_months) >= 1 && Integer.parseInt(shouldbe_months) <= 60) {
-                passtime_months_within_boundaries = true;
-            }
+        passtime_payload_is_int = true;
+        if (Integer.parseInt(shouldbe_months) >= 1 && Integer.parseInt(shouldbe_months) <= 60) {
+            passtime_months_within_boundaries = true;
         }
         return passtime_payload_is_int && passtime_months_within_boundaries;
     }
