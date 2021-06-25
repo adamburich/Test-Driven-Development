@@ -47,7 +47,7 @@ public abstract class Account {
     public double getBalance() {
         if (balance < 0) {
             setBalance(0);
-            return 0;
+            return getBalance();
         } else {
             return balance;
         }
