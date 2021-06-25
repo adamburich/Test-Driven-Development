@@ -3,6 +3,8 @@ package banking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTest {
@@ -193,4 +195,12 @@ public class BankTest {
         assertTrue(a1.getBalance() == 0);
     }
 
+    @Test
+    void single_digit_apr_outputs_correctly() {
+        Account a1 = new SavingsAccount(ID, 1);
+        bank.addAccount(a1);
+        a1.setBalance(5000);
+        ArrayList<String> out = bank.output();
+        assertTrue(out.get(0).contains("1.00"));
+    }
 }
