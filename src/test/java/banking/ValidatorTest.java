@@ -175,4 +175,12 @@ public class ValidatorTest {
         PassCommand p = new PassCommand("Pass 15a");
         assertFalse(val.validate(p));
     }
+
+    @Test
+    void valid_to_create_deleted_account() {
+        CreateCommand c1 = new CreateCommand("create savings 12345678 0");
+        bank.addAccount(new SavingsAccount(12345678, 0));
+        bank.passTime(1);
+        assertTrue(val.validate(c1));
+    }
 }
