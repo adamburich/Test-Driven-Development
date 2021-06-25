@@ -124,13 +124,14 @@ public class ValidatorTest {
 
     @Test
     void invalid_create_command_is_invalid() {
-        CreateCommand c = new CreateCommand("Create savings 1234ABC2 .14");
+        CreateCommand c = new CreateCommand("Create savings 1234ABC2 .1A4");
         assertFalse(val.validate(c));
     }
 
     @Test
     void invalid_transfer_command_is_invalid() {
-        TransferCommand t = new TransferCommand("transfer 12345678 234ABCD9 100");
+        TransferCommand t = new TransferCommand("transfer 123EFGH8 234ABCD9 1A0");
         assertFalse(val.validate(t));
     }
+
 }
