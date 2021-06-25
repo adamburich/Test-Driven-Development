@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TransferCommandProcessorTest {
     TransferCommandProcessor tcp;
@@ -23,7 +24,7 @@ public class TransferCommandProcessorTest {
         ca.deposit(500);
         sa.deposit(500);
         tcp.issue_command(new TransferCommand("transfer 12345678 23456789 400"));
-        assertEquals(sa.getBalance(), 900);
+        assertEquals(sa.getBalance() == 900, ca.getBalance() == 100);
     }
 
     @Test
@@ -34,7 +35,7 @@ public class TransferCommandProcessorTest {
         bank.addAccount(c2);
         c1.setBalance(300);
         tcp.issue_command(new TransferCommand("transfer 12345678 12345679 500"));
-        assertEquals(c2.getBalance(), 300);
+        assertEquals(c2.getBalance() == 300, c1.getBalance() == 0);
     }
 
     @Test
@@ -45,7 +46,33 @@ public class TransferCommandProcessorTest {
         bank.addAccount(c2);
         c1.setBalance(300);
         tcp.issue_command(new TransferCommand("transfer 12345678 12345679 300"));
-        assertEquals(c2.getBalance(), 300);
+        assertEquals(c2.getBalance() == 300, c1.getBalance() == 0);
 
     }
+
+    @Test
+    void transfer_appears_in_source_transaction_history() {
+        CheckingAccount c1 = new CheckingAccount(12345678, 1);
+        CheckingAccount c2 = new CheckingAccount(12345679, 1);
+        bank.addAccount(c1);
+        bank.addAccount(c2);
+        c1.setBalance(300);
+        tcp.issue_command(new TransferCommand("transfer 12345678 12345679 300"));
+        assertTrue(c1.transactionHistory().size() > 0);
+
+    }
+
+    @Test
+    void transfer_appears_in_target_transaction_history() {
+        CheckingAccount c1 = new CheckingAccount(12345678, 1);
+        CheckingAccount c2 = new CheckingAccount(12345679, 1);
+        bank.addAccount(c1);
+        bank.addAccount(c2);
+        c1.setBalance(300);
+        tcp.issue_command(new TransferCommand("transfer 12345678 12345679 300"));
+        assertTrue(c2.transactionHistory().size() > 0);
+
+    }
+
+
 }
