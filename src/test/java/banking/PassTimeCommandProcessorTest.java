@@ -38,12 +38,21 @@ public class PassTimeCommandProcessorTest {
     void account_below_100_loses_25_per_month() {
         CheckingAccount ca = new CheckingAccount(12345678, 0);
         bank.addAccount(ca);
-        ca.setBalance(75);
+        ca.setBalance(99);
         ptcp.issue_command(new PassCommand("pass 1"));
         SavingsAccount sa = new SavingsAccount(23456789, 0);
         bank.addAccount(sa);
         sa.setBalance(75);
         ptcp.issue_command(new PassCommand("pass 1"));
-        assertTrue(ca.getBalance() == 25 && sa.getBalance() == 50);
+        assertTrue(ca.getBalance() == 49 && sa.getBalance() == 50);
+    }
+
+    @Test
+    void account_at_100_loses_none() {
+        CheckingAccount ca = new CheckingAccount(12345678, 0);
+        bank.addAccount(ca);
+        ca.setBalance(100);
+        ptcp.issue_command(new PassCommand("pass 1"));
+        assertTrue(ca.getBalance() == 100);
     }
 }
