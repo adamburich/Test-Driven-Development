@@ -25,24 +25,27 @@ public class Validator {
     public boolean validate(Command c) {
         boolean out = false;
         c = c.identify_type();
-        if (c != null && c.getInstruction().equalsIgnoreCase(c.getValidInstruction())) {
-            cmd_has_valid_instruction = true;
-            if (c.getValidPayloadLength().contains(c.getPayload().length)) {
-                cmd_has_valid_payload_size = true;
-                if (c instanceof CreateCommand && proceed_create(c.getPayload())) {
-                    out = createCommandValidator.validate(c);
-                } else if (c instanceof DepositCommand && proceed_deposit_withdraw(c.getPayload())) {
-                    out = depositCommandValidator.validate(c);
-                } else if (c instanceof PassCommand && c.getPayload()[0].matches(INTS) && !c.getPayload()[0].contains(".")) {
-                    out = passTimeCommandValidator.validate(c);
-                } else if (c instanceof WithdrawalCommand && proceed_deposit_withdraw(c.getPayload())) {
-                    out = withdrawalCommandValidator.validate(c);
-                } else if (c instanceof TransferCommand && proceed_transfer(c.getPayload())) {
-                    out = transferCommandValidator.validate(c);
-                }
+        if (cmd_matches_valid_structure(c)) {
+            if (c instanceof CreateCommand && proceed_create(c.getPayload())) {
+                out = createCommandValidator.validate(c);
+            } else if (c instanceof DepositCommand && proceed_deposit_withdraw(c.getPayload())) {
+                out = depositCommandValidator.validate(c);
+            } else if (c instanceof PassCommand && c.getPayload()[0].matches(INTS) && !c.getPayload()[0].contains(".")) {
+                out = passTimeCommandValidator.validate(c);
+            } else if (c instanceof WithdrawalCommand && proceed_deposit_withdraw(c.getPayload())) {
+                out = withdrawalCommandValidator.validate(c);
+            } else if (c instanceof TransferCommand && proceed_transfer(c.getPayload())) {
+                out = transferCommandValidator.validate(c);
             }
         }
         return out;
+    }
+
+    public boolean cmd_matches_valid_structure(Command c) {
+        if ((c != null && c.getInstruction().equalsIgnoreCase(c.getValidInstruction())) && (c.getValidPayloadLength().contains(c.getPayload().length))) {
+            return true;
+        }
+        return false;
     }
 
     public boolean proceed_create(String[] payload) {

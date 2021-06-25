@@ -245,7 +245,7 @@ public class AccountTest {
         processor.issue_command(new TransferCommand("transfer 12345678 12345679 300"));
         List<String> checking1_history = checking1.transactionHistory();
         List<String> checking2_history = checking2.transactionHistory();
-        assertEquals(0, 0);
+        assertEquals(checking1_history, checking2_history);
     }
 
 }
