@@ -134,4 +134,45 @@ public class ValidatorTest {
         assertFalse(val.validate(t));
     }
 
+    @Test
+    void letters_in_deposit_target() {
+        DepositCommand d = new DepositCommand("Deposit 12345ABC 100");
+        Account a = new CheckingAccount(12345678, 1);
+        bank.addAccount(a);
+        a.setBalance(500);
+        assertFalse(val.validate(d));
+    }
+
+    @Test
+    void letters_in_deposit_amount() {
+        DepositCommand d = new DepositCommand("Deposit 12345678 1A0");
+        Account a = new CheckingAccount(12345678, 1);
+        bank.addAccount(a);
+        a.setBalance(500);
+        assertFalse(val.validate(d));
+    }
+
+    @Test
+    void letters_in_withdrawal_target() {
+        WithdrawalCommand w = new WithdrawalCommand("Deposit 12345ABC 100");
+        Account a = new CheckingAccount(12345678, 1);
+        bank.addAccount(a);
+        a.setBalance(500);
+        assertFalse(val.validate(w));
+    }
+
+    @Test
+    void letters_in_withdrawal_amount() {
+        WithdrawalCommand w = new WithdrawalCommand("Deposit 12345678 10A");
+        Account a = new CheckingAccount(12345678, 1);
+        bank.addAccount(a);
+        a.setBalance(500);
+        assertFalse(val.validate(w));
+    }
+
+    @Test
+    void letters_in_pass_time_int() {
+        PassCommand p = new PassCommand("Pass 15a");
+        assertFalse(val.validate(p));
+    }
 }

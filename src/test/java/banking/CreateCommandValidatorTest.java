@@ -165,4 +165,14 @@ public class CreateCommandValidatorTest {
     void attempt_create_with_letter_number_ID() {
         assertFalse(val.validate(new CreateCommand("create checking ABC12345 0.5")));
     }
+
+    @Test
+    void attempt_create_with_nine_digit_ID_is_invalid() {
+        assertFalse(val.validate(new CreateCommand("create checking 123456789 .1")));
+    }
+
+    @Test
+    void attempt_create_with_seven_digit_ID_is_invalid() {
+        assertFalse(val.validate(new CreateCommand("create checking 1234567 .1")));
+    }
 }
